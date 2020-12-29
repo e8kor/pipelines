@@ -20,10 +20,3 @@ module "database" {
     POSTGRES_DB = var.database_name
   }
 }
-
-module "database-volume" {
-  source      = "./modules/volume"
-  name        = "database"
-  storage = "2Gi"
-  storage_path = "/mnt"
-}

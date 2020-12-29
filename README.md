@@ -21,16 +21,18 @@ Install k3sup:
 
 Create cluster:
 ```bash 
-k3sup install --ip $master --user pi && \
-    k3sup join --ip $node1 --server-ip $master --user pi && \
-    k3sup join --ip $node2 --server-ip $master --user pi && \
-    k3sup join --ip $node3 --server-ip $master --user pi
+k3sup install --ip $master --user pi  \
+    && k3sup join --ip $node1 --server-ip $master --user pi \
+    && k3sup join --ip $node2 --server-ip $master --user pi \
+    && k3sup join --ip $node3 --server-ip $master --user pi
 ```
 
-Install OpenFaas and Dashboard:
+Install OpenFaas, its connectors, and Dashboard:
 ```bash
-arkade install openfaas && \
-    arkade install kubernetes-dashboard
+arkade install openfaas \
+    && arkade install kubernetes-dashboard  \
+    && arkade install cron-connector \
+    && arkade install nats-connector
 ```
 
 TODO:
