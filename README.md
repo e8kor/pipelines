@@ -30,9 +30,18 @@ k3sup install --ip $master --user pi  \
 Install OpenFaas, its connectors, and Dashboard:
 ```bash
 arkade install openfaas \
-    && arkade install kubernetes-dashboard  \
-    && arkade install cron-connector \
-    && arkade install nats-connector
+    && arkade install kubernetes-dashboard
+    && arkade get linkerd2 \
+    && arkade install linkerd 
+```
+
+```bash
+kubectl -n openfaas get deploy gateway -o yaml | linkerd inject --skip-outbound-ports=4222 - | kubectl apply -f - \
+    && kubectl -n openfaas get deploy/basic-auth-plugin -o yaml | linkerd inject - | kubectl apply -f - \
+    && kubectl -n openfaas get deploy/faas-idler -o yaml | linkerd inject - | kubectl apply -f -  \
+    && kubectl -n openfaas get deploy/queue-worker -o yaml | linkerd inject  --skip-outbound-ports=4222 - | kubectl apply -f - \
+    && kubectl annotate namespace openfaas-fn linkerd.io/inject=enabled  \
+    && kubectl -n openfaas-fn get deploy -o yaml | linkerd inject - | kubectl apply -f -
 ```
 
 TODO:
