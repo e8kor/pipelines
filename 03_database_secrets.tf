@@ -47,7 +47,7 @@ resource "kubernetes_secret" "database-name" {
   }
 
   data = {
-    value = var.database_name
+    database-name = var.database_name
   }
 }
 
@@ -58,7 +58,7 @@ resource "kubernetes_secret" "database-password" {
   }
 
   data = {
-    value = random_password.database.result
+    database-password = random_password.database.result
   }
 }
 
@@ -69,6 +69,6 @@ resource "kubernetes_secret" "database-username" {
   }
 
   data = {
-    value = var.database_username
+    database-username = var.database_username
   }
 }
