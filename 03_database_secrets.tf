@@ -30,10 +30,45 @@ output "database_password" {
 resource "kubernetes_secret" "database" {
   metadata {
     name = "database"
+    namespace = "default"
   }
 
   data = {
     username = var.database_username
     password = random_password.database.result
+    database_name = var.database_name
+  }
+}
+
+resource "kubernetes_secret" "database-name" {
+  metadata {
+    name = "database-name"
+    namespace = "openfaas-fn"
+  }
+
+  data = {
+    value = var.database_name
+  }
+}
+
+resource "kubernetes_secret" "database-password" {
+  metadata {
+    name = "database-password"
+    namespace = "openfaas-fn"
+  }
+
+  data = {
+    value = random_password.database.result
+  }
+}
+
+resource "kubernetes_secret" "database-username" {
+  metadata {
+    name = "database-username"
+    namespace = "openfaas-fn"
+  }
+
+  data = {
+    value = var.database_username
   }
 }
