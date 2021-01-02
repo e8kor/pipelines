@@ -29,9 +29,9 @@ resource "kubernetes_secret" "storage" {
   }
 }
 
-resource "kubernetes_secret" "access-key" {
+resource "kubernetes_secret" "storage-access-key" {
   metadata {
-    name = "access-key"
+    name = "storage-access-key"
     namespace = "openfaas-fn"
   }
 
@@ -40,9 +40,9 @@ resource "kubernetes_secret" "access-key" {
   }
 }
 
-resource "kubernetes_secret" "secret-key" {
+resource "kubernetes_secret" "storage-secret-key" {
   metadata {
-    name = "secret-key"
+    name = "storage-secret-key"
     namespace = "openfaas-fn"
   }
 
