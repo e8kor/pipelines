@@ -1,17 +1,12 @@
+CREATE SEQUENCE IF NOT EXISTS otodomserial;
 
-CREATE SEQUENCE IF NOT EXISTS testserial;
-
-CREATE TABLE IF NOT EXISTS test (
-    ID INT PRIMARY KEY NOT NULL DEFAULT NEXTVAL('testserial'),
+CREATE TABLE IF NOT EXISTS otodom (
+    ID INT PRIMARY KEY NOT NULL DEFAULT NEXTVAL('otodomserial'),
     created timestamp NOT NULL,
     data           json    NOT NULL
 );
 
 COMMIT;
-
-INSERT INTO test(created, data) VALUES ('2020-12-31T21:22:45Z'::timestamp, '{
-	"entry": "test"
-	}');
 
 -- INSERT INTO testv3(created, data) VALUES 
 --     (TO_TIMESTAMP('2020-12-31 20:43:33.52 +0000 UTC m=+64.899146112'), '{ "entry": "test"}');
