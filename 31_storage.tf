@@ -7,7 +7,7 @@ module "storage" {
   external_tcp = [9000]
   replicas = 1
   args = [ "server", "/mnt/data" ]
-  memory = "128Mi"
+  memory = "512Mi"
   mounts = [
     {
       claim_name = "storage"

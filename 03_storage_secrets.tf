@@ -36,7 +36,7 @@ resource "kubernetes_secret" "storage-access-key" {
   }
 
   data = {
-    access-key = var.storage_access_key
+    storage-access-key = var.storage_access_key
   }
 }
 
@@ -47,6 +47,6 @@ resource "kubernetes_secret" "storage-secret-key" {
   }
 
   data = {
-    secret-key = random_password.storage.result
+    storage-secret-key = random_password.storage.result
   }
 }
