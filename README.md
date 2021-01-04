@@ -46,3 +46,5 @@ kubectl -n openfaas get deploy gateway -o yaml | linkerd inject --skip-outbound-
 
 TODO:
 - airflow integration
+- Kubernetes cluster is too weak to handle linkerd2 installed
+- add glusterfs as network storage
