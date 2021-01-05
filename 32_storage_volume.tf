@@ -5,8 +5,8 @@ resource "kubernetes_persistent_volume" "storage-0" {
       "app" = "storage"
     }
   }
+  
   spec {
-
     capacity = {
       storage = "1Gi"
     }
@@ -20,7 +20,6 @@ resource "kubernetes_persistent_volume" "storage-0" {
     }
   }
 }
-
 resource "kubernetes_persistent_volume" "storage-1" {
   metadata {
     name = "storage-1"
