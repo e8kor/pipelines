@@ -1,4 +1,4 @@
-resource "kubernetes_service" "database" {
+resource "kubernetes_service" "external-database" {
   metadata {
     name = "database"
   }

@@ -19,7 +19,6 @@ resource "kubernetes_stateful_set" "database" {
         labels = {
           app = "database"
         }
-        annotations = {}
       }
 
       spec {

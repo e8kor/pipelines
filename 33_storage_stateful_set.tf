@@ -16,7 +16,6 @@ resource "kubernetes_stateful_set" "storage" {
         labels = {
           app = "storage"
         }
-        annotations = {}
       }
       spec {
         container {

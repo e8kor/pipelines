@@ -1,4 +1,4 @@
-resource "kubernetes_service" "storage-service" {
+resource "kubernetes_service" "service-storage" {
   metadata {
     name = "storage-service"
   }
@@ -10,6 +10,24 @@ resource "kubernetes_service" "storage-service" {
     }
     selector = {
       app = "storage"
+    }
+  }
+}
+resource "kubernetes_service" "external-storage" {
+  metadata {
+    name = "external-storage"
+  }
+  
+  spec {
+    session_affinity = "ClientIP"
+    type = "LoadBalancer"
+    selector = {
+      app = "storage"
+    }
+
+    port {
+      port = 9000
+      target_port = 9000
     }
   }
 }
