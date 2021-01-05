@@ -14,13 +14,14 @@ resource "kubernetes_stateful_set" "storage" {
     template {
       metadata {
         labels = {
-          "app" = "storage"
+          app = "storage"
         }
+        annotations = {}
       }
       spec {
         container {
           name = "storage"
-          image = "minio/minio:RELEASE.2017-05-05T01-14-51Z"
+          image = "minio/minio:RELEASE.2020-11-25T22-36-25Z"
           env {
             name = "MINIO_ACCESS_KEY"
             value = var.storage_access_key
@@ -48,16 +49,30 @@ resource "kubernetes_stateful_set" "storage" {
       }
     }
 
+    update_strategy {
+      type = "RollingUpdate"
+
+      rolling_update {
+        partition = 1
+      }
+    } 
+
     volume_claim_template {
       metadata {
         name = "storage"
       }
+      
       spec {
         storage_class_name = "standard"
         access_modes = ["ReadWriteOnce"] 
+        selector {
+          match_labels = {
+            "app" = "storage"
+          }
+        }
         resources {
           requests = {
-            "storage" = "1Gi"
+            storage = "1Gi"
           }
         }
       }

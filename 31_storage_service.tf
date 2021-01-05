@@ -1,19 +1,18 @@
-resource "kubernetes_service" "minio" {
+resource "kubernetes_service" "storage" {
   metadata {
-    name = "minio"
+    name = "storage"
     labels = {
-      "app" = "minio"
+      app = "storage"
     }
   }
   spec {
     cluster_ip = "None"
     port {
       port        = 9000
-      name = "minio"
-      target_port = 80
+      name = "storage"
     }
     selector = {
-      app = "minio"
+      app = "storage"
     }
   }
 }

@@ -10,14 +10,14 @@ resource "kubernetes_stateful_set" "database" {
 
     selector {
       match_labels = {
-        k8s-app = "database"
+        app = "database"
       }
     }
 
     template {
       metadata {
         labels = {
-          k8s-app = "database"
+          app = "database"
         }
         annotations = {}
       }
@@ -60,14 +60,17 @@ resource "kubernetes_stateful_set" "database" {
       metadata {
         name = "database"
       }
-
       spec {
-        access_modes       = ["ReadWriteOnce"]
         storage_class_name = "standard"
-
+        access_modes       = ["ReadWriteOnce"]
+        selector {
+          match_labels = {
+            "app" = "database"
+          }
+        }
         resources {
           requests = {
-            storage = "1Gi"
+            storage = "2Gi"
           }
         }
       }
