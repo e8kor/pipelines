@@ -15,7 +15,7 @@ resource "kubernetes_service_account" "admin" {
     namespace = "kube-system"
   }
   secret {
-    name = "${kubernetes_secret.admin.metadata.0.name}"
+    name = "admin"
   }
 }
 
