@@ -1,7 +1,7 @@
 #!/bin/bash
 
 node1="192.168.0.211"
-# node2="192.168.0.212"
+node2="192.168.0.212"
 node3="192.168.0.213"
 node4="192.168.0.214"
 node5="192.168.0.215"
@@ -27,13 +27,16 @@ then
         && k3sup join --ip $node5 --server-ip $node1 --user pi \
         && k3sup join --ip $node6 --server-ip $node1 --user pi
 
-        # && k3sup join --ip $node1 --server-ip $master --user pi \
-    # kubectl label node node2 node-role.kubernetes.io/worker= \
-    kubectl label node node1 node-role.kubernetes.io/worker= \
-    && kubectl label node node3 node-role.kubernetes.io/worker= \
-    && kubectl label node node4 node-role.kubernetes.io/worker= \
-    && kubectl label node node5 node-role.kubernetes.io/worker= \
-    && kubectl label node node6 node-role.kubernetes.io/worker=
+
+    kubectl label node --overwrite node1 node-role.kubernetes.io/master= \
+    && kubectl label node --overwrite node3 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node4 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node5 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node6 node-role.kubernetes.io/worker=
+
+
+    k3sup join --ip $node1 --server-ip $master --user pi \
+    && kubectl label node node2 node-role.kubernetes.io/worker=
 fi
 
 read -p "Should install linkerd2? [Y/n]" -n 1 -r

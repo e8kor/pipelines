@@ -1,21 +1,24 @@
-resource "kubernetes_service" "kubernetes-dashboard" {
-  metadata {
-    name = "kubernetes-dashboard"
-    labels = {
-      k8s-app = "kubernetes-dashboard"
-    }
-  }
-  spec {
-    session_affinity = "ClientIP"
-    type = "LoadBalancer"
-    selector = {
-      k8s-app = "kubernetes-dashboard"
-    }
+# resource "kubernetes_service" "external-kubernetes-dashboard" {
+#   metadata {
+#     name = "external-kubernetes-dashboard"
+#     namespace = "kubernetes-dashboard"
+#     labels = {
+#       k8s-app = "kubernetes-dashboard"
+#     }
+#   }
+#   spec {
+#     type = "LoadBalancer"
+#     session_affinity = "ClientIP" 
+#     selector = {
+#       "k8s-app" = "kubernetes-dashboard"
+#     }
 
-    port {
-      port = 9000
-      target_port = 9000
-    }
-  }
+#     port {
+#       name = "access-port"
+#       protocol = "TCP"
+#       port = 8001
+#       target_port = 8443
+#     }
+#   }
   
-}
+# }
