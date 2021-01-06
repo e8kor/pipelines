@@ -28,25 +28,3 @@ resource "kubernetes_secret" "storage" {
     secret_key = random_password.storage.result
   }
 }
-
-resource "kubernetes_secret" "storage-access-key" {
-  metadata {
-    name = "storage-access-key"
-    namespace = "openfaas-fn"
-  }
-
-  data = {
-    storage-access-key = var.storage_access_key
-  }
-}
-
-resource "kubernetes_secret" "storage-secret-key" {
-  metadata {
-    name = "storage-secret-key"
-    namespace = "openfaas-fn"
-  }
-
-  data = {
-    storage-secret-key = random_password.storage.result
-  }
-}

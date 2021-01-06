@@ -38,7 +38,7 @@ resource "kubernetes_stateful_set" "storage" {
           ]
           port {
             container_port = 9000
-            host_port = 9000
+            host_port = 9000 # if deployment fails comment out field
           }
           volume_mount {
             name = "storage"

@@ -39,36 +39,3 @@ resource "kubernetes_secret" "database" {
     database_name = var.database_name
   }
 }
-
-resource "kubernetes_secret" "database-name" {
-  metadata {
-    name = "database-name"
-    namespace = "openfaas-fn"
-  }
-
-  data = {
-    database-name = var.database_name
-  }
-}
-
-resource "kubernetes_secret" "database-password" {
-  metadata {
-    name = "database-password"
-    namespace = "openfaas-fn"
-  }
-
-  data = {
-    database-password = random_password.database.result
-  }
-}
-
-resource "kubernetes_secret" "database-username" {
-  metadata {
-    name = "database-username"
-    namespace = "openfaas-fn"
-  }
-
-  data = {
-    database-username = var.database_username
-  }
-}

@@ -1,9 +1,11 @@
 #!/bin/bash
 
-master="192.168.0.211"
-node1="192.168.0.212"
-node2="192.168.0.213"
-node3="192.168.0.214"
+node1="192.168.0.211"
+# node2="192.168.0.212"
+node3="192.168.0.213"
+node4="192.168.0.214"
+node5="192.168.0.215"
+node6="192.168.0.216"
 
 if ! [ -x "$(command -v arkade)" ]; then
     echo ' arkade is not installed.'
@@ -19,14 +21,19 @@ read -p "Initialize cluster? [Y/n]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    k3sup install --ip $master --user pi --local-path ~/.kube/config \
-        && k3sup join --ip $node1 --server-ip $master --user pi \
-        && k3sup join --ip $node2 --server-ip $master --user pi \
-        && k3sup join --ip $node3 --server-ip $master --user pi
+    k3sup install --ip $node1 --user pi --local-path ~/.kube/config \
+        && k3sup join --ip $node3 --server-ip $node1 --user pi \
+        && k3sup join --ip $node4 --server-ip $node1 --user pi \
+        && k3sup join --ip $node5 --server-ip $node1 --user pi \
+        && k3sup join --ip $node6 --server-ip $node1 --user pi
 
-    kubectl label node node2.k3s node-role.kubernetes.io/worker= \
-    && kubectl label node node3.k3s node-role.kubernetes.io/worker= \
-    && kubectl label node node4.k3s node-role.kubernetes.io/worker=
+        # && k3sup join --ip $node1 --server-ip $master --user pi \
+    # kubectl label node node2 node-role.kubernetes.io/worker= \
+    kubectl label node node1 node-role.kubernetes.io/worker= \
+    && kubectl label node node3 node-role.kubernetes.io/worker= \
+    && kubectl label node node4 node-role.kubernetes.io/worker= \
+    && kubectl label node node5 node-role.kubernetes.io/worker= \
+    && kubectl label node node6 node-role.kubernetes.io/worker=
 fi
 
 read -p "Should install linkerd2? [Y/n]" -n 1 -r
