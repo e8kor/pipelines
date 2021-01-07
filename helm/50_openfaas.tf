@@ -1,5 +1,5 @@
 resource "helm_release" "openfaas" {
-  name       = "openfaas"
+  name      = "openfaas"
   namespace = "openfaas"
 
   repository = "https://openfaas.github.io/faas-netes"
@@ -16,15 +16,15 @@ resource "helm_release" "openfaas" {
   }
 }
 resource "helm_release" "openfaas_nats_connector" {
-  name       = "nats-connector"
+  name      = "nats-connector"
   namespace = "openfaas"
-# UPDATE image to this ghcr.io/openfaas/nats-connector
+  # UPDATE image to this ghcr.io/openfaas/nats-connector
   repository = "https://openfaas.github.io/faas-netes"
   chart      = "openfaas/nats-connector"
 }
 
 resource "helm_release" "openfaas_cron_connector" {
-  name       = "cron-connector"
+  name      = "cron-connector"
   namespace = "openfaas"
 
   repository = "https://openfaas.github.io/faas-netes"

@@ -12,9 +12,9 @@ data "kubernetes_secret" "database" {
 }
 
 resource "kubernetes_secret" "storage-access-key" {
-  depends_on = [ helm_release.openfaas ]
+  # depends_on = [ helm_release.openfaas ]
   metadata {
-    name = "storage-access-key"
+    name      = "storage-access-key"
     namespace = "openfaas-fn"
   }
 
@@ -24,9 +24,9 @@ resource "kubernetes_secret" "storage-access-key" {
 }
 
 resource "kubernetes_secret" "storage-secret-key" {
-  depends_on = [ helm_release.openfaas ]
+  # depends_on = [ helm_release.openfaas ]
   metadata {
-    name = "storage-secret-key"
+    name      = "storage-secret-key"
     namespace = "openfaas-fn"
   }
 
@@ -36,9 +36,9 @@ resource "kubernetes_secret" "storage-secret-key" {
 }
 
 resource "kubernetes_secret" "database-name" {
-  depends_on = [ helm_release.openfaas ]
+  # depends_on = [ helm_release.openfaas ]
   metadata {
-    name = "database-name"
+    name      = "database-name"
     namespace = "openfaas-fn"
   }
 
@@ -48,9 +48,9 @@ resource "kubernetes_secret" "database-name" {
 }
 
 resource "kubernetes_secret" "database-password" {
-  depends_on = [ helm_release.openfaas ]
+  # depends_on = [ helm_release.openfaas ]
   metadata {
-    name = "database-password"
+    name      = "database-password"
     namespace = "openfaas-fn"
   }
 
@@ -60,9 +60,9 @@ resource "kubernetes_secret" "database-password" {
 }
 
 resource "kubernetes_secret" "database-username" {
-  depends_on = [ helm_release.openfaas ]
+  # depends_on = [ helm_release.openfaas ]
   metadata {
-    name = "database-username"
+    name      = "database-username"
     namespace = "openfaas-fn"
   }
 
