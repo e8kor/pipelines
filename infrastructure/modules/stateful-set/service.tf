@@ -1,4 +1,5 @@
-resource "kubernetes_service" "external-accessor" {
+resource "kubernetes_service" "service" {
+  depends_on = [ kubernetes_stateful_set.stateful-set ]
   metadata {
     name = var.name
     labels = {
@@ -7,14 +8,13 @@ resource "kubernetes_service" "external-accessor" {
   }
   
   spec {
+    publish_not_ready_addresses = true
     cluster_ip = "None"
     dynamic "port" {
       for_each = var.internal_tcp
       content {
         port = port.value
-        # host_port = port.value # if deployment fails comment out field
-        protocol     = "TCP"
-        name         = "tcp-int-${port.key}"
+        name = "tcp-int-${port.key}"
       }
     }
     selector = {

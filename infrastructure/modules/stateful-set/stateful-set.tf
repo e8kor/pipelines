@@ -41,7 +41,6 @@ resource "kubernetes_stateful_set" "stateful-set" {
             for_each = var.internal_tcp
             content {
               container_port = port.value
-              # host_port = port.value # if deployment fails comment out field
               protocol     = "TCP"
               name         = "tcp-int-${port.key}"
             }

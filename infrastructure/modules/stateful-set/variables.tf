@@ -70,7 +70,7 @@ variable "mounts" {
 
 variable "memory" {
   description = "how much memory the application needs"
-  default     = "1Gi"
+  default     = null
 }
 
 variable "cpu" {

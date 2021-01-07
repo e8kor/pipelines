@@ -5,13 +5,13 @@ resource "kubernetes_persistent_volume" "storage-0" {
       "app" = "storage"
     }
   }
-  
+
   spec {
     capacity = {
       storage = "1Gi"
     }
-    storage_class_name = "standard"
-    access_modes = ["ReadWriteMany", "ReadWriteOnce"]
+    storage_class_name               = "standard"
+    access_modes                     = ["ReadWriteMany", "ReadWriteOnce"]
     persistent_volume_reclaim_policy = "Retain"
     persistent_volume_source {
       host_path {
@@ -32,8 +32,8 @@ resource "kubernetes_persistent_volume" "storage-1" {
     capacity = {
       storage = "1Gi"
     }
-    storage_class_name = "standard"
-    access_modes = ["ReadWriteMany", "ReadWriteOnce"]
+    storage_class_name               = "standard"
+    access_modes                     = ["ReadWriteMany", "ReadWriteOnce"]
     persistent_volume_reclaim_policy = "Retain"
     persistent_volume_source {
       host_path {
@@ -54,8 +54,8 @@ resource "kubernetes_persistent_volume" "storage-2" {
     capacity = {
       storage = "1Gi"
     }
-    storage_class_name = "standard"
-    access_modes = ["ReadWriteMany", "ReadWriteOnce"]
+    storage_class_name               = "standard"
+    access_modes                     = ["ReadWriteMany", "ReadWriteOnce"]
     persistent_volume_reclaim_policy = "Retain"
     persistent_volume_source {
       host_path {
@@ -76,8 +76,8 @@ resource "kubernetes_persistent_volume" "storage-3" {
     capacity = {
       storage = "1Gi"
     }
-    storage_class_name = "standard"
-    access_modes = ["ReadWriteMany", "ReadWriteOnce"]
+    storage_class_name               = "standard"
+    access_modes                     = ["ReadWriteMany", "ReadWriteOnce"]
     persistent_volume_reclaim_policy = "Retain"
     persistent_volume_source {
       host_path {
