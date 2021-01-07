@@ -1,6 +1,10 @@
 resource "kubernetes_persistent_volume" "storage" {
   metadata {
     name = var.name
+    labels = {
+      app = var.name
+      resource = "volume"
+    }
   }
   spec {
     capacity = {
@@ -20,6 +24,10 @@ resource "kubernetes_persistent_volume" "storage" {
 resource "kubernetes_persistent_volume_claim" "storage" {
   metadata {
     name = var.name
+    labels = {
+      app = var.name
+      resource = "volume-claim"
+    }
   }
   spec {
     storage_class_name = "standard"

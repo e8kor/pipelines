@@ -1,5 +1,5 @@
 module "database" {
-  depends_on = [ kubernetes_persistent_volume.database-0 ]
+  depends_on    = [kubernetes_persistent_volume.database-0]
   source        = "./modules/stateful-set"
   name          = "database"
   image         = "postgres"
@@ -7,7 +7,7 @@ module "database" {
   internal_tcp  = [5432]
   external_tcp  = [5432]
   replicas      = 1
-  storage = "1Gi"
+  storage       = "1Gi"
   memory        = "256Mi"
   mounts = [
     {

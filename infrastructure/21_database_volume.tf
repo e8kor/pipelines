@@ -2,7 +2,8 @@ resource "kubernetes_persistent_volume" "database-0" {
   metadata {
     name = "database-0"
     labels = {
-      "app" = "database"
+      app      = "database"
+      resource = "volume"
     }
   }
   spec {

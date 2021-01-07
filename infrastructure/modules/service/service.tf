@@ -9,13 +9,14 @@ resource "kubernetes_service" "service" {
     name      = "${var.name}-tcp"
     namespace = "default"
     labels = {
-      k8s-app = var.name
+      app = var.name
+      resource = "service"
     }
   }
   spec {
     type = "LoadBalancer"
     selector = {
-      k8s-app = var.name
+      app = var.name
     }
     
     port {

@@ -1,5 +1,5 @@
 module "storage" {
-  depends_on = [ kubernetes_persistent_volume.storage-0, kubernetes_persistent_volume.storage-1, kubernetes_persistent_volume.storage-2, kubernetes_persistent_volume.storage-3 ]
+  depends_on    = [kubernetes_persistent_volume.storage-0, kubernetes_persistent_volume.storage-1, kubernetes_persistent_volume.storage-2, kubernetes_persistent_volume.storage-3]
   source        = "./modules/stateful-set"
   name          = "storage"
   image         = "minio/minio"
@@ -7,7 +7,7 @@ module "storage" {
   internal_tcp  = [9000]
   external_tcp  = [9000]
   replicas      = 4
-  storage = "1Gi"
+  storage       = "1Gi"
   args = [
     "server",
     "http://storage-0.storage.default.svc.cluster.local/data",
@@ -25,27 +25,5 @@ module "storage" {
   env = {
     MINIO_ACCESS_KEY = var.storage_access_key
     MINIO_SECRET_KEY = random_password.storage.result
-  }
-}
-
-resource "kubernetes_network_policy" "storage" {
-  metadata {
-    name      = "terraform-example-network-policy"
-    labels = {
-      "app" = "storage"
-    }
-  }
-
-  spec {
-    pod_selector {
-      match_labels = {
-        "app" = "storage"
-      }
-    }
-
-    ingress {}
-    egress {}
-
-    policy_types = ["Ingress", "Egress"]
   }
 }

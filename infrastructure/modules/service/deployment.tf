@@ -5,22 +5,22 @@ locals {
 resource "kubernetes_deployment" "deployment" {
   metadata {
     name = var.name
-    namespace = "default"
     labels = {
-      k8s-app = var.name
+      app = var.name
     }
   }
   spec {
     replicas = var.replicas
     selector {
       match_labels = {
-        k8s-app = var.name
+        app = var.name
       }
     }
     template {
       metadata {
         labels = {
-          k8s-app = var.name
+          app = var.name
+          resource = "deployment"
         }
       }
       spec {

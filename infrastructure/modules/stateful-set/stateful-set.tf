@@ -15,6 +15,7 @@ resource "kubernetes_stateful_set" "stateful-set" {
       metadata {
         labels = {
           app = var.name
+          resource = "stateful-set"
         }
       }
       spec {
