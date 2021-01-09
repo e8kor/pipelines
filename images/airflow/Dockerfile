@@ -15,7 +15,7 @@ ENV PYTHONPATH="${PYTHONPATH}:/usr/lib/python3/dist-packages"
 
 RUN pip install -U pip setuptools wheel \
 	&& pip install pyOpenSSL \
-    && pip install apache-airflow[crypto,aws,slack,postgres]
+    && pip install apache-airflow[crypto,postgres,async,devel,celery,crypto,jdbc,hdfs,ldap,password]
 
 COPY ./entrypoint.sh /entrypoint.sh
 
