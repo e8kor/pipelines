@@ -1,6 +1,6 @@
 module "storage" {
   depends_on    = [kubernetes_persistent_volume.storage-0, kubernetes_persistent_volume.storage-1, kubernetes_persistent_volume.storage-2, kubernetes_persistent_volume.storage-3]
-  source        = "./modules/stateful-set"
+  source        = "../modules/stateful-set"
   name          = "storage"
   image         = "minio/minio"
   image_version = "RELEASE.2020-11-25T22-36-25Z"

@@ -1,6 +1,6 @@
 module "database" {
   depends_on    = [kubernetes_persistent_volume.database-0]
-  source        = "./modules/stateful-set"
+  source        = "../modules/stateful-set"
   name          = "database"
   image         = "postgres"
   image_version = "latest"
