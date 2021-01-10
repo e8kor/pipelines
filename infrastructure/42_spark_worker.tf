@@ -30,7 +30,11 @@ resource "kubernetes_deployment" "spark-worker" {
           name  = "spark-worker"
           image = "e8kor/apache-spark:3.0.1"
           image_pull_policy = "Always"
-          command = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://node6:7077", "--webui-port", "8081"]
+          args = ["executor", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark"]
+          env {
+            name = "SPARK_EXECUTOR_MEMORY"
+            value = "1g"
+          }
           port {
             container_port = 8081
           }

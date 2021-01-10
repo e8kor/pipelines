@@ -29,7 +29,7 @@ resource "kubernetes_deployment" "spark-master" {
           name  = "spark-master"
           image = "e8kor/apache-spark:3.0.1"
           image_pull_policy = "Always"
-          command = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master", "--ip", "node6", "--port", "7077", "--webui-port", "8080"]
+          args = ["driver", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark", "org.apache.spark.deploy.master.Master", "--ip", "spark-master", "--port", "7077", "--webui-port", "8080"]
           port {
             container_port = 7077
           }
