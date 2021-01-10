@@ -55,6 +55,15 @@ resource "kubernetes_stateful_set" "stateful-set" {
             }
           }
         }
+        dynamic "volume" {
+          for_each = var.config_volumes
+          content {
+            name     = volume.value.name
+            config_map {
+              name = volume.value.config_map_name
+            }
+          }
+        }
       }
     }
 

@@ -66,6 +66,15 @@ variable "mounts" {
     sub_path       = string
     container_path = string
   }))
+  default = []
+}
+
+variable "config_volumes" {
+  type = list(object({
+    name            = string
+    config_map_name = string
+  }))
+  default = []
 }
 
 variable "memory" {

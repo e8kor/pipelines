@@ -14,6 +14,16 @@ module "database" {
       claim_name     = "database"
       sub_path       = "data"
       container_path = "/local/lib/postgresql/data"
+    }, {
+      claim_name     = "init-database"
+      sub_path = ""
+      container_path = "/docker-entrypoint-initdb.d"
+    }
+  ]
+  config_volumes = [
+    {
+      name = "init-database"
+      config_map_name = "init-database"
     }
   ]
   env = {
