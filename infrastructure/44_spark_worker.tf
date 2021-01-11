@@ -30,7 +30,6 @@ resource "kubernetes_deployment" "spark-worker" {
         container {
           name  = "spark-worker"
           image = "e8kor/apache-spark:3.0.1"
-          image_pull_policy = "Always"
           # command = [ "tail", "-F", "/opt/entrypoint.sh"]
           command = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://blockmanager-spark:7077", "--webui-port", "8081"]
           port {
