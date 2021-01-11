@@ -7,6 +7,7 @@ resource "kubernetes_deployment" "deployment" {
     name = var.name
     labels = {
       app = var.name
+      resource = "deployment"
     }
   }
   spec {
@@ -67,6 +68,18 @@ resource "kubernetes_deployment" "deployment" {
               cpu = var.cpu
             }
           }
+        }
+        dynamic "volume" {
+          for_each = var.config_volumes
+          content {
+            name     = volume.value.name
+            config_map {
+              name = volume.value.config_map_name
+            }
+          }
+        }
+        node_selector = {
+          "node-role.kubernetes.io/spark" = var.node_selector
         }
       }
     }

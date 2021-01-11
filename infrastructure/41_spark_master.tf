@@ -28,7 +28,6 @@ resource "kubernetes_deployment" "spark-master" {
         container {
           name  = "spark-master"
           image = "e8kor/apache-spark:3.0.1"
-          # command = [ "tail", "-F", "/opt/entrypoint.sh"]
           command = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master", "--ip", "0.0.0.0", "--port", "7077", "--webui-port", "8080", "--properties-file" , "/opt/spark/conf/spark-defaults.conf"]
           port {
             container_port = 7077
@@ -52,7 +51,9 @@ resource "kubernetes_deployment" "spark-master" {
             name = "master-spark-defaults"
           }
         }
-        node_name = "node6"
+        node_selector = {
+          "node-role.kubernetes.io/spark" = ""
+        }
       }
     }
   }
