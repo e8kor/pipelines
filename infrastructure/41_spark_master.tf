@@ -29,17 +29,28 @@ resource "kubernetes_deployment" "spark-master" {
           name  = "spark-master"
           image = "e8kor/apache-spark:3.0.1"
           image_pull_policy = "Always"
-          args = ["driver", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark", "org.apache.spark.deploy.master.Master", "--ip", "spark-master", "--port", "7077", "--webui-port", "8080"]
+          # command = [ "tail", "-F", "/opt/entrypoint.sh"]
+          command = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master", "--ip", "0.0.0.0", "--port", "7077", "--webui-port", "8080", "--properties-file" , "/opt/spark/conf/spark-defaults.conf"]
           port {
             container_port = 7077
           }
           port {
             container_port = 8080
           }
+          volume_mount {
+            name       = "spark-defaults"
+            mount_path = "/opt/spark/conf"
+          }
           resources {
             requests {
               cpu    = "100m"
             }
+          }
+        }
+        volume {
+          name = "spark-defaults"
+          config_map {
+            name = "master-spark-defaults"
           }
         }
         node_name = "node6"

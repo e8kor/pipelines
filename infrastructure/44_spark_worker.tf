@@ -1,4 +1,5 @@
 resource "kubernetes_deployment" "spark-worker" {
+  depends_on = [kubernetes_service.blockmanager-spark]
   metadata {
     name = "spark-worker"
     labels = {
@@ -30,11 +31,8 @@ resource "kubernetes_deployment" "spark-worker" {
           name  = "spark-worker"
           image = "e8kor/apache-spark:3.0.1"
           image_pull_policy = "Always"
-          args = ["executor", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark"]
-          env {
-            name = "SPARK_EXECUTOR_MEMORY"
-            value = "1g"
-          }
+          # command = [ "tail", "-F", "/opt/entrypoint.sh"]
+          command = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://blockmanager-spark:7077", "--webui-port", "8081"]
           port {
             container_port = 8081
           }
