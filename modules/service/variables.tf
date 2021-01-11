@@ -65,4 +65,18 @@ variable "mounts" {
     sub_path       = string
     container_path = string
   }))
+  default = []
+}
+
+variable "config_volumes" {
+  type = list(object({
+    claim_name      = string
+    config_map_name = string
+  }))
+  default = []
+}
+
+variable "node_selector" {
+  type = map(any)
+  default = {}
 }

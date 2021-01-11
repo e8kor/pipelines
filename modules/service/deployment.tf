@@ -1,7 +1,3 @@
-locals {
-  volumes = distinct([for mount in var.mounts : mount.claim_name])
-}
-
 resource "kubernetes_deployment" "deployment" {
   metadata {
     name = var.name
@@ -25,15 +21,6 @@ resource "kubernetes_deployment" "deployment" {
         }
       }
       spec {
-        dynamic "volume" {
-          for_each = local.volumes
-          content {
-            name = volume.value
-            persistent_volume_claim {
-              claim_name = volume.value
-            }
-          }
-        }
         container {
           name  = var.name
           image = "${var.image}:${var.image_version}"
@@ -72,15 +59,13 @@ resource "kubernetes_deployment" "deployment" {
         dynamic "volume" {
           for_each = var.config_volumes
           content {
-            name     = volume.value.name
+            name     = volume.value.claim_name
             config_map {
               name = volume.value.config_map_name
             }
           }
         }
-        node_selector = {
-          "node-role.kubernetes.io/spark" = var.node_selector
-        }
+        node_selector = var.node_selector
       }
     }
     revision_history_limit = 5

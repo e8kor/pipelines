@@ -4,9 +4,9 @@ locals {
 }
 
 resource "kubernetes_service" "service" {
-  count = length(var.internal_tcp)
+  count = length(var.external_tcp)
   metadata {
-    name      = "${var.name}-tcp"
+    name      = "${var.name}-tcp-${count.index}"
     namespace = "default"
     labels = {
       app = var.name
@@ -14,13 +14,13 @@ resource "kubernetes_service" "service" {
     }
   }
   spec {
-    type = "LoadBalancer"
+    cluster_ip = "None"
     selector = {
       app = var.name
     }
     
     port {
-      port    = var.internal_tcp[count.index]
+      port    = var.external_tcp[count.index]
       target_port = var.external_tcp[count.index]
     }
   }
