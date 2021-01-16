@@ -23,7 +23,29 @@ module "storage" {
     }
   ]
   env = {
-    MINIO_ACCESS_KEY = var.storage_access_key
+    MINIO_ACCESS_KEY = var.storage-access-key
     MINIO_SECRET_KEY = random_password.storage.result
+  }
+}
+
+resource "kubernetes_service" "external-storage" {
+  depends_on = [module.storage]
+  metadata {
+    name = "external-storage"
+    labels = {
+      app      = "storage"
+      resource = "service"
+    }
+  }
+  spec {
+    type = "NodePort"
+    port {
+      port        = 9000
+      target_port = 9000
+      node_port   = 30000
+    }
+    selector = {
+      app = "storage"
+    }
   }
 }

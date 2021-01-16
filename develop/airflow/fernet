@@ -1,0 +1,5 @@
+#!/bin/bash
+
+data=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | openssl base64)
+
+jq -n --arg data "$data" '{"data":$data}'

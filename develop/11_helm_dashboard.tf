@@ -3,6 +3,6 @@ resource "helm_release" "dashboard" {
   namespace = "kubernetes-dashboard"
 
   repository = "https://kubernetes.github.io/dashboard"
-  chart      = "kubernetes-dashboard/kubernetes-dashboard"
+  chart      = "kubernetes-dashboard"
 
 }

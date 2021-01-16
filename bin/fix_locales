@@ -1,0 +1,7 @@
+#!/bin/bash
+
+crun "sudo apt-get install -y locales" \
+&& crun 'sudo sh -c "echo \"LC_ALL=en_US.UTF-8\" >> /etc/environment"' \
+&& crun 'sudo sh -c "echo \"en_US.UTF-8 UTF-8\" >> /etc/locale.gen"' \
+&& crun 'sudo sh -c "echo \"LANG=en_US.UTF-8\" > /etc/locale.con"' \
+&& crun 'sudo locale-gen en_US.UTF-8'
