@@ -10,5 +10,7 @@ TODO:
 - Kubernetes cluster is too weak to handle linkerd2 installed
 - add glusterfs as network storage
 
+fernet key: M336Pq2Y8TlMXIO0hPbmQkvtJEutPUPEc95DAyQl56A=
+
 Tips: 
     run infinite loop for debug: `command = [ "tail", "-F", "/opt/entrypoint.sh"]`
