@@ -1,0 +1,49 @@
+#!/bin/bash
+
+nodes=("192.168.0.211" "192.168.0.212" "192.168.0.213" "192.168.0.214" "192.168.0.215" "192.168.0.216")
+
+read -p "install gluster? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    crun 'sudo apt-get install -y xfsprogs glusterfs-server glusterfs-client lvm2 thin-provisioning-tools && sudo systemctl start glusterd && sudo systemctl enable glusterd'
+    script="echo 'star ping' "
+    for node in ${nodes[@]}; do
+        script+="&& sudo gluster peer probe $node "
+    done
+    ssh leader "$script"
+    ssh leader "sudo gluster peer status"
+fi
+
+read -p "uninstall heketi? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    ssh pi@${nodes[0]} "sudo rm -rf /usr/bin/heketi* && sudo rm -rf /usr/local/bin/heketi* && sudo rm -rf /etc/heketi && sudo rm -rf /var/lib/heketi && sudo rm -rf /usr/lib/systemd/system/heketi.service "
+fi
+
+read -p "install heketi? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P ) \
+    && cd "$parent_path" \
+    && scp  ../share/heketi/install_heketi.sh pi@${nodes[0]}:~ \
+    && scp  ../share/heketi/start_heketi.sh pi@${nodes[0]}:~ \
+    && scp  ../share/heketi/heketi.service root@${nodes[0]}:/usr/lib/systemd/system \
+    && ssh pi@${nodes[0]} "bash ~/install_heketi.sh" \
+    && scp ./../share/heketi/heketi.json root@${nodes[0]}:/etc/heketi/heketi.json \
+    && scp ./../share/heketi/heketi.env root@${nodes[0]}:/etc/heketi/heketi.env \
+    && scp ./../share/heketi/topology.json root@${nodes[0]}:/etc/heketi/topology.json \
+    && scp pi@${nodes[0]}:/etc/heketi/heketi_key.pub ./../share/heketi/temp \
+    && scp pi@${nodes[0]}:/etc/heketi/heketi_key ./../share/heketi/temp
+
+    for node in ${nodes[@]}; do
+        ssh-copy-id -i ./../share/heketi/temp/heketi_key.pub pi@$node
+    done
+    
+    ssh pi@${nodes[0]} "bash ~/start_heketi.sh" \
+    && ssh pi@${nodes[0]} "rm ~/install_heketi.sh" \
+    && ssh pi@${nodes[0]} "rm ~/start_heketi.sh"
+fi
+

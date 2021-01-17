@@ -1,7 +1,7 @@
 resource "kubernetes_namespace" "openfaas-fn" {
   metadata {
     labels = {
-      app = "openfaas-fn"
+      app      = "openfaas-fn"
       resource = "namespace"
     }
 
@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "openfaas-fn" {
 resource "kubernetes_namespace" "openfaas" {
   metadata {
     labels = {
-      app = "openfaas"
+      app      = "openfaas"
       resource = "namespace"
     }
 

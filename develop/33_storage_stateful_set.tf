@@ -1,5 +1,5 @@
 module "storage" {
-  depends_on    = [kubernetes_persistent_volume.storage-0, kubernetes_persistent_volume.storage-1, kubernetes_persistent_volume.storage-2, kubernetes_persistent_volume.storage-3]
+  depends_on    = [kubernetes_storage_class.volumes]
   source        = "../modules/stateful-set"
   name          = "storage"
   image         = "minio/minio"

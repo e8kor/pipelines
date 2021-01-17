@@ -9,14 +9,14 @@ resource "kubernetes_config_map" "init-database" {
 
   data = {
     "01_init-airflow-user.sql" = file("${path.module}/database/01_init-airflow-user.sql")
-    "02_init-airflow-db.sql" = file("${path.module}/database/02_init-airflow-db.sql")
-    "03_init-user-db.sql" = file("${path.module}/database/03_init-user-db.sql")
+    "02_init-airflow-db.sql"   = file("${path.module}/database/02_init-airflow-db.sql")
+    "03_init-user-db.sql"      = file("${path.module}/database/03_init-user-db.sql")
   }
 
 }
 
 module "database" {
-  depends_on    = [kubernetes_persistent_volume.database-0, kubernetes_config_map.init-database]
+  depends_on    = [kubernetes_config_map.init-database, kubernetes_storage_class.volumes]
   source        = "../modules/stateful-set"
   name          = "database"
   image         = "postgres"
@@ -31,15 +31,15 @@ module "database" {
       claim_name     = "database"
       sub_path       = "data"
       container_path = "/local/lib/postgresql/data"
-    }, {
+      }, {
       claim_name     = "init-database"
-      sub_path = ""
+      sub_path       = ""
       container_path = "/docker-entrypoint-initdb.d"
     }
   ]
   config_volumes = [
     {
-      name = "init-database"
+      name            = "init-database"
       config_map_name = "init-database"
     }
   ]

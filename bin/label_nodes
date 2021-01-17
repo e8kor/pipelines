@@ -39,3 +39,12 @@ then
     && kubectl label node --overwrite node5 node-role.kubernetes.io/spark= \
     && kubectl label node --overwrite node6 node-role.kubernetes.io/spark=
 fi
+
+read -p "label spark nodes? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    kubectl label node --overwrite node1 storagenode=glusterfs \
+    && kubectl label node --overwrite node5 storagenode=glusterfs \
+    && kubectl label node --overwrite node6 storagenode=glusterfs
+fi

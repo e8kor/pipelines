@@ -1,11 +1,12 @@
 #!/bin/bash
 
-node1="192.168.0.211"
-node2="192.168.0.212"
-node3="192.168.0.213"
-node4="192.168.0.214"
-node5="192.168.0.215"
-node6="192.168.0.216"
+nodes=("192.168.0.211" "192.168.0.212" "192.168.0.213" "192.168.0.214" "192.168.0.215" "192.168.0.216")
+node1=${nodes[1]}
+node2=${nodes[2]}
+node3=${nodes[3]}
+node4=${nodes[4]}
+node5=${nodes[5]}
+node6=${nodes[6]}
 
 if ! [ -x "$(command -v arkade)" ]; then
     echo ' arkade is not installed.'
@@ -28,4 +29,69 @@ then
         && k3sup join --ip $node5 --server-ip $node1 --user pi \
         && k3sup join --ip $node6 --server-ip $node1 --user pi
     
+fi
+
+read -p "label worker nodes? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    kubectl label node --overwrite node1 node-role.kubernetes.io/master= \
+    && kubectl label node --overwrite node2 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node3 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node4 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node5 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node6 node-role.kubernetes.io/worker=
+fi
+
+read -p "label node modes? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    kubectl label node --overwrite node1 model=pi4 \
+    && kubectl label node --overwrite node2 model=pi4 \
+    && kubectl label node --overwrite node3 model=pi4 \
+    && kubectl label node --overwrite node4 model=pi3 \
+    && kubectl label node --overwrite node5 model=pi3 \
+    && kubectl label node --overwrite node6 model=pi2
+fi
+
+read -p "label spark nodes? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    kubectl label node --overwrite node1 node-role.kubernetes.io/spark= \
+    && kubectl label node --overwrite node5 node-role.kubernetes.io/spark= \
+    && kubectl label node --overwrite node6 node-role.kubernetes.io/spark=
+fi
+
+read -p "fix locales? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    crun 'sudo apt-get install -y locales' \
+    && crun 'sudo sh -c "echo \"LC_ALL=en_US.UTF-8\" >> /etc/environment"' \
+    && crun 'sudo sh -c "echo \"en_US.UTF-8 UTF-8\" >> /etc/locale.gen"' \
+    && crun 'sudo sh -c "echo \"LANG=en_US.UTF-8\" > /etc/locale.con"' \
+    && crun 'sudo locale-gen en_US.UTF-8'
+fi
+
+read -p "create mnt folders? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    crun 'sudo mkdir /mnt/storage' \
+    && crun 'sudo mkdir /mnt/database' 
+fi
+
+read -p "install gluster? [Y/n]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    crun 'sudo apt-get install -y glusterfs-server' \
+        && crun 'sudo systemctl start glusterd'\
+        && crun 'sudo systemctl enable glusterd'
+
+    for node in ${nodes[@]}; do
+        crun "gluster peer probe $node"
+    done
 fi
