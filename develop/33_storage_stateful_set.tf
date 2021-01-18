@@ -18,7 +18,7 @@ module "storage" {
   mounts = [
     {
       claim_name     = "storage"
-      sub_path       = "data"
+      sub_path       = ""
       container_path = "/data"
     }
   ]

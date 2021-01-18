@@ -78,16 +78,12 @@ resource "kubernetes_stateful_set" "stateful-set" {
     volume_claim_template {
       metadata {
         name = var.name
-      }
-      
-      spec {
-        storage_class_name = "standard"
-        access_modes = ["ReadWriteOnce"] 
-        selector {
-          match_labels = {
-            "app" = var.name
-          }
+        annotations = {
+          "volume.beta.kubernetes.io/storage-class"= "volumes"
         }
+      }
+      spec {
+        access_modes = ["ReadWriteOnce"] 
         resources {
           requests = {
             storage = var.storage
