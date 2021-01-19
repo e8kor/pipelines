@@ -10,7 +10,7 @@ resource "kubernetes_persistent_volume" "storage" {
     capacity = {
       storage = var.storage
     }
-    storage_class_name = "standard"
+    storage_class_name = "volumes"
     access_modes = ["ReadWriteMany"]
     persistent_volume_reclaim_policy = "Retain"
     persistent_volume_source {
@@ -30,7 +30,7 @@ resource "kubernetes_persistent_volume_claim" "storage" {
     }
   }
   spec {
-    storage_class_name = "standard"
+    storage_class_name = "volumes"
     access_modes       = ["ReadWriteMany"]
     resources {
       requests = {

@@ -83,6 +83,7 @@ resource "kubernetes_stateful_set" "stateful-set" {
         }
       }
       spec {
+        storage_class_name = "volumes"
         access_modes = ["ReadWriteOnce"] 
         resources {
           requests = {
