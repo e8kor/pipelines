@@ -22,7 +22,7 @@ resource "kubernetes_daemonset" "fs" {
           name  = "fs"
           security_context {
             privileged = true
-            capabilities = {}
+            capabilities {}
           }
           volume_mount {
             name= "glusterfs-heketi"

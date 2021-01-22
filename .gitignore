@@ -1,4 +1,5 @@
 terraform.tfstate
+errored.tfstate
 .terraform.lock.hcl
 .terraform
 .vscode
