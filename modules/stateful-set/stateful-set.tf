@@ -26,7 +26,7 @@ resource "kubernetes_stateful_set" "stateful-set" {
           args = var.args
           command = var.command
           resources {
-            requests {
+            requests = {
               memory = var.memory
               cpu = var.cpu
             }

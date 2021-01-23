@@ -2,6 +2,7 @@ resource "kubernetes_daemonset" "fs" {
   metadata {
     name      = "fs"
     labels = {
+      app      = "fs"
       resource = "daemonset"
     }
   }
@@ -10,6 +11,7 @@ resource "kubernetes_daemonset" "fs" {
       metadata {
         labels = {
           app = "fs"
+          resource = "replicaset"
         }
       }
       spec {
@@ -22,13 +24,6 @@ resource "kubernetes_daemonset" "fs" {
           name  = "fs"
           security_context {
             privileged = true
-            capabilities {}
-          }
-          resources {
-            requests{
-              memory="100Mi"
-              cpu="100m"
-            }
           }
           volume_mount {
             name= "glusterfs-heketi"

@@ -16,7 +16,7 @@ resource "kubernetes_config_map" "init-database" {
 }
 
 module "database" {
-  depends_on    = [kubernetes_config_map.init-database, kubernetes_storage_class.volumes]
+  depends_on    = [kubernetes_config_map.init-database, kubernetes_storage_class.fs]
   source        = "../modules/stateful-set"
   name          = "database"
   image         = "postgres"

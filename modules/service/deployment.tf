@@ -50,7 +50,7 @@ resource "kubernetes_deployment" "deployment" {
             }
           }
           resources {
-            requests {
+            requests = {
               memory = var.memory
               cpu = var.cpu
             }
