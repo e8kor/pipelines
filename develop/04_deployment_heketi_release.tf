@@ -1,6 +1,6 @@
-resource "kubernetes_service" "fs-provisioner-bootstrap" {
+resource "kubernetes_service" "fs-provisioner-release" {
   metadata {
-    name      = "fs-provisioner-bootstrap"
+    name      = "fs-provisioner-release"
     labels = {
       app = "fs-provisioner"
       resource = "service"
@@ -10,20 +10,20 @@ resource "kubernetes_service" "fs-provisioner-bootstrap" {
     selector = {
       app = "fs-provisioner"
       resource = "pod"
-      type = "bootstrap"
+      type = "release"
     }
     
     port {
-      name = "fs-provisioner-bootstrap"
+      name = "fs-provisioner-release"
       port    = 8080
       target_port = 8080
     }
   }
 } 
 
-resource "kubernetes_deployment" "fs-provisioner-bootstrap" {
+resource "kubernetes_deployment" "fs-provisioner-release" {
   metadata {
-    name      = "fs-provisioner-bootstrap"
+    name      = "fs-provisioner-release"
     labels = {
       app = "fs-provisioner"
       resource = "deployment"
@@ -36,7 +36,7 @@ resource "kubernetes_deployment" "fs-provisioner-bootstrap" {
         labels = {
           app = "fs-provisioner"
           resource = "pod"
-          type = "bootstrap"
+          type = "release"
         }
       }
       spec {
@@ -101,6 +101,10 @@ resource "kubernetes_deployment" "fs-provisioner-bootstrap" {
         }
         volume {
           name = "db"
+          glusterfs {
+            endpoints_name="heketi-storage-endpoints"
+            path="heketidbstorage"
+          }
         }
         volume {
           name = "config"

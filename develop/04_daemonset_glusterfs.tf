@@ -24,6 +24,12 @@ resource "kubernetes_daemonset" "fs" {
             privileged = true
             capabilities {}
           }
+          resources {
+            requests{
+              memory="100Mi"
+              cpu="100m"
+            }
+          }
           volume_mount {
             name= "glusterfs-heketi"
             mount_path = "/var/lib/heketi"
