@@ -1,4 +1,5 @@
 resource "kubernetes_storage_class" "fs" {
+  depends_on = [kubernetes_deployment.fs-provisioner-bootstrap]
   metadata {
     name = "fs"
     annotations = {
@@ -6,17 +7,18 @@ resource "kubernetes_storage_class" "fs" {
     }
     labels = {
       "resource" = "storageclass"
-      "app" = "fs"
+      "app"      = "fs"
     }
   }
   storage_provisioner = "kubernetes.io/glusterfs"
   reclaim_policy      = "Retain"
   volume_binding_mode = "Immediate"
   parameters = {
-    endpoints_name = "heketi-storage-endpoints"
+    endpoints_name   = "heketi-storage-endpoints"
     resturl          = "http://fs-provisioner:8080"
     restuser         = "admin"
     secret_namespace = "default"
-    secret_name = "fs-config-secret"
+    secret_name      = "fs-config-secret"
+    "volumetype"     = "none"
   }
 }

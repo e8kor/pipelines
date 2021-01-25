@@ -44,14 +44,17 @@ read -p "label fs nodes? [Y/n]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    kubectl label node --overwrite node1 storagenode=fs \
-    && kubectl label node --overwrite node5 storagenode=fs \
-    && kubectl label node --overwrite node6 storagenode=fs
+    kubectl label node --overwrite node1 node-role.kubernetes.io/fs= \
+    && kubectl label node --overwrite node2 node-role.kubernetes.io/fs= \
+    && kubectl label node --overwrite node3 node-role.kubernetes.io/fs= \
+    && kubectl label node --overwrite node4 node-role.kubernetes.io/fs= \
+    && kubectl label node --overwrite node5 node-role.kubernetes.io/fs= \
+    && kubectl label node --overwrite node6 node-role.kubernetes.io/fs=
 fi
 
 read -p "label fs-provisioner nodes? [Y/n]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    kubectl label node --overwrite node1 storagenode=fs-provisioner
+    kubectl label node --overwrite node1 node-role.kubernetes.io/fs-provisioner= 
 fi

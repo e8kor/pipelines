@@ -1,4 +1,6 @@
 provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "default"
 }
 
 provider "helm" {
@@ -6,7 +8,6 @@ provider "helm" {
     config_path = "~/.kube/config"
   }
 }
-
 
 terraform {
   required_version = ">= 0.12"

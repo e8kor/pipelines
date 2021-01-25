@@ -3,7 +3,7 @@
         "nodes": [{
                 "node": {
                     "hostnames": {
-                        "manage": [ "192.168.0.211" ],
+                        "manage": [ "node1" ],
                         "storage": [ "192.168.0.211" ]
                     },
                     "zone": 1
@@ -12,13 +12,17 @@
                     {
                         "name": "/dev/mmcblk0",
                         "destroydata": true
+                    },
+                    {
+                        "name": "/dev/sda",
+                        "destroydata": true
                     }
                 ]
             },
             {
                 "node": {
                     "hostnames": {
-                        "manage": [ "192.168.0.213" ],
+                        "manage": [ "node3" ],
                         "storage": [ "192.168.0.213" ]
                     },
                     "zone": 1
@@ -27,13 +31,17 @@
                     {
                         "name": "/dev/mmcblk0",
                         "destroydata": true
+                    },
+                    {
+                        "name": "/dev/sdb",
+                        "destroydata": true
                     }
                 ]
             },
             {
                 "node": {
                     "hostnames": {
-                        "manage": [ "192.168.0.216" ],
+                        "manage": [ "node6" ],
                         "storage": [ "192.168.0.216" ]
                     },
                     "zone": 1
@@ -41,6 +49,10 @@
                 "devices": [
                     {
                         "name": "/dev/mmcblk0",
+                        "destroydata": true
+                    },
+                    {
+                        "name": "/dev/sdb",
                         "destroydata": true
                     }
                 ]

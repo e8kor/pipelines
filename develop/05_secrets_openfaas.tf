@@ -1,5 +1,5 @@
 resource "kubernetes_secret" "storage-access-key" {
-  depends_on = [kubernetes_namespace.openfaas-fn]
+  #   depends_on = [kubernetes_namespace.openfaas-fn]
   metadata {
     name      = "storage-access-key"
     namespace = "openfaas-fn"
@@ -11,7 +11,7 @@ resource "kubernetes_secret" "storage-access-key" {
 }
 
 resource "kubernetes_secret" "storage-secret-key" {
-  depends_on = [kubernetes_namespace.openfaas-fn]
+  #   depends_on = [kubernetes_namespace.openfaas-fn]
   metadata {
     name      = "storage-secret-key"
     namespace = "openfaas-fn"
@@ -24,7 +24,7 @@ resource "kubernetes_secret" "storage-secret-key" {
 
 
 resource "kubernetes_secret" "database-name" {
-  depends_on = [kubernetes_namespace.openfaas-fn]
+  #   depends_on = [kubernetes_namespace.openfaas-fn]
   metadata {
     name      = "database-name"
     namespace = "openfaas-fn"
@@ -36,7 +36,7 @@ resource "kubernetes_secret" "database-name" {
 }
 
 resource "kubernetes_secret" "database-password" {
-  depends_on = [kubernetes_namespace.openfaas-fn]
+  #   depends_on = [kubernetes_namespace.openfaas-fn]
   metadata {
     name      = "database-password"
     namespace = "openfaas-fn"

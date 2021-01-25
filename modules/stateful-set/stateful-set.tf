@@ -22,7 +22,7 @@ resource "kubernetes_stateful_set" "stateful-set" {
         container {
           name  = var.name
           image = "${var.image}:${var.image_version}"
-          image_pull_policy = "IfNotPresent"
+          image_pull_policy = "Always"
           args = var.args
           command = var.command
           resources {
