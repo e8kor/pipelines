@@ -17,8 +17,9 @@ resource "kubernetes_daemonset" "fs" {
       metadata {
         name = "fs"
         labels = {
-          app      = "fs"
-          resource = "daemonset"
+          app            = "fs"
+          resource       = "daemonset"
+          glusterfs-node = "daemonset"
         }
       }
       spec {
@@ -33,6 +34,10 @@ resource "kubernetes_daemonset" "fs" {
           security_context {
             privileged = true
             capabilities { }
+          }
+          env {
+            name = "ROOT_PASSWORD"
+            value =  "HelloWorld"
           }
           volume_mount {
             name       = "glusterfs-heketi"

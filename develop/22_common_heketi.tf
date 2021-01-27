@@ -1,10 +1,13 @@
-resource "kubernetes_secret" "fs-config-secret" {
+
+
+resource "kubernetes_secret" "fs-provisioner" {
   metadata {
-    name = "fs-config-secret"
+    name = "fs-provisioner"
   }
 
   data = {
-    key = "ivd7dfORN7QNeKVO"
+    username = "admin"
+    secret = "ivd7dfORN7QNeKVO"
   }
 }
 
@@ -16,6 +19,19 @@ resource "kubernetes_secret" "fs-db-secret" {
   data = {}
 }
 
+resource "kubernetes_config_map" "fs-provisioner-topology-config" {
+  metadata {
+    name = "fs-provisioner-topology-config"
+    labels = {
+      app      = "fs-provisioner-topology-config"
+      resource = "config"
+    }
+  }
+
+  data = {
+    "default.json"  = file("${path.module}/glusterfs/heketi-topology.json")
+  }
+}
 
 resource "kubernetes_config_map" "fs-provisioner-config" {
   metadata {
@@ -27,10 +43,7 @@ resource "kubernetes_config_map" "fs-provisioner-config" {
   }
 
   data = {
-    "heketi.json"    = file("${path.module}/heketi/heketi.json")
-    "topology.json"  = file("${path.module}/heketi/topology.json")
-    "heketi_key"     = file("${path.module}/heketi/heketi_key")
-    "heketi_key.pub" = file("${path.module}/heketi/heketi_key.pub")
+    "heketi.json"  = file("${path.module}/glusterfs/heketi-config.json")
   }
 }
 
