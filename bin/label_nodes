@@ -1,11 +1,14 @@
 #!/bin/bash
 
-node1="192.168.0.211"
-node2="192.168.0.212"
-node3="192.168.0.213"
-node4="192.168.0.214"
-node5="192.168.0.215"
-node6="192.168.0.216"
+nodes=("192.168.0.211" "192.168.0.212" "192.168.0.213" "192.168.0.214" "192.168.0.215" "192.168.0.216" "192.168.0.217" "192.168.0.218")
+node1=${nodes[0]}
+node2=${nodes[1]}
+node3=${nodes[2]}
+node4=${nodes[3]}
+node5=${nodes[4]}
+node6=${nodes[5]}
+node7=${nodes[6]}
+node8=${nodes[7]}
 
 read -p "label worker nodes? [Y/n]" -n 1 -r
 echo
@@ -16,7 +19,9 @@ then
     && kubectl label node --overwrite node3 node-role.kubernetes.io/worker= \
     && kubectl label node --overwrite node4 node-role.kubernetes.io/worker= \
     && kubectl label node --overwrite node5 node-role.kubernetes.io/worker= \
-    && kubectl label node --overwrite node6 node-role.kubernetes.io/worker=
+    && kubectl label node --overwrite node6 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node7 node-role.kubernetes.io/worker= \
+    && kubectl label node --overwrite node8 node-role.kubernetes.io/worker=
 fi
 
 read -p "label node modes? [Y/n]" -n 1 -r
@@ -24,19 +29,21 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     kubectl label node --overwrite node1 model=pi4 \
-    && kubectl label node --overwrite node2 model=pi4 \
+    && kubectl label node --overwrite node2 model=pi2 \
     && kubectl label node --overwrite node3 model=pi4 \
     && kubectl label node --overwrite node4 model=pi3 \
     && kubectl label node --overwrite node5 model=pi3 \
-    && kubectl label node --overwrite node6 model=pi2
+    && kubectl label node --overwrite node6 model=pi4 \
+    && kubectl label node --overwrite node7 model=pi4 \
+    && kubectl label node --overwrite node8 model=pi4
 fi
 
 read -p "label spark nodes? [Y/n]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    kubectl label node --overwrite node1 node-role.kubernetes.io/spark= \
-    && kubectl label node --overwrite node5 node-role.kubernetes.io/spark= \
+    kubectl label node --overwrite node8 node-role.kubernetes.io/spark= \
+    && kubectl label node --overwrite node7 node-role.kubernetes.io/spark= \
     && kubectl label node --overwrite node6 node-role.kubernetes.io/spark=
 fi
 
@@ -44,17 +51,14 @@ read -p "label fs nodes? [Y/n]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    kubectl label node --overwrite node1 node-role.kubernetes.io/fs= \
-    && kubectl label node --overwrite node2 node-role.kubernetes.io/fs= \
-    && kubectl label node --overwrite node3 node-role.kubernetes.io/fs= \
-    && kubectl label node --overwrite node4 node-role.kubernetes.io/fs= \
-    && kubectl label node --overwrite node5 node-role.kubernetes.io/fs= \
-    && kubectl label node --overwrite node6 node-role.kubernetes.io/fs=
+    kubectl label node --overwrite node3 node-role.kubernetes.io/fs= \
+    && kubectl label node --overwrite node6 node-role.kubernetes.io/fs= \
+    && kubectl label node --overwrite node7 node-role.kubernetes.io/fs=
 fi
 
 read -p "label fs-provisioner nodes? [Y/n]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    kubectl label node --overwrite node1 node-role.kubernetes.io/fs-provisioner= 
+    kubectl label node --overwrite node3 node-role.kubernetes.io/fs-provisioner= 
 fi

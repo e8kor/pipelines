@@ -1,24 +1,6 @@
 {
     "clusters": [{
-        "nodes": [{
-                "node": {
-                    "hostnames": {
-                        "manage": [ "node1" ],
-                        "storage": [ "192.168.0.211" ]
-                    },
-                    "zone": 1
-                },
-                "devices": [
-                    {
-                        "name": "/dev/mmcblk0",
-                        "destroydata": true
-                    },
-                    {
-                        "name": "/dev/sda",
-                        "destroydata": true
-                    }
-                ]
-            },
+        "nodes": [
             {
                 "node": {
                     "hostnames": {
@@ -29,7 +11,7 @@
                 },
                 "devices": [
                     {
-                        "name": "/dev/mmcblk0",
+                        "name": "/dev/sda",
                         "destroydata": true
                     },
                     {
@@ -48,7 +30,26 @@
                 },
                 "devices": [
                     {
-                        "name": "/dev/mmcblk0",
+                        "name": "/dev/sda",
+                        "destroydata": true
+                    },
+                    {
+                        "name": "/dev/sdb",
+                        "destroydata": true
+                    }
+                ]
+            },
+            {
+                "node": {
+                    "hostnames": {
+                        "manage": [ "node7" ],
+                        "storage": [ "192.168.0.217" ]
+                    },
+                    "zone": 1
+                },
+                "devices": [
+                    {
+                        "name": "/dev/sda",
                         "destroydata": true
                     },
                     {

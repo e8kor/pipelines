@@ -5,6 +5,8 @@ resource "kubernetes_deployment" "fs-provisioner-bootstrap" {
     labels = {
       app      = "fs-provisioner"
       resource = "deployment"
+      glusterfs= "heketi-deployment",
+      deploy-heketi= "deployment"
     }
   }
   spec {
@@ -22,6 +24,9 @@ resource "kubernetes_deployment" "fs-provisioner-bootstrap" {
           app      = "fs-provisioner"
           resource = "pod"
           type     = "bootstrap"
+          name= "deploy-heketi"
+          glusterfs= "heketi-pod"
+          deploy-heketi= "pod"
         }
       }
       spec {
@@ -111,22 +116,22 @@ resource "kubernetes_deployment" "fs-provisioner-bootstrap" {
             name       = "config"
             mount_path = "/etc/heketi"
           }
-          # readiness_probe {
-          #   http_get {
-          #     path = "/hello"
-          #     port = 8080
-          #   }
-          #   timeout_seconds       = 3
-          #   initial_delay_seconds = 3
-          # }
-          # liveness_probe {
-          #   http_get {
-          #     path = "/hello"
-          #     port = 8080
-          #   }
-          #   timeout_seconds       = 3
-          #   initial_delay_seconds = 3
-          # }
+          readiness_probe {
+            http_get {
+              path = "/hello"
+              port = 8080
+            }
+            timeout_seconds       = 3
+            initial_delay_seconds = 3
+          }
+          liveness_probe {
+            http_get {
+              path = "/hello"
+              port = 8080
+            }
+            timeout_seconds       = 3
+            initial_delay_seconds = 3
+          }
         }
         volume {
           name = "db"

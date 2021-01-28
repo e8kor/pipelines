@@ -1,12 +1,14 @@
 #!/bin/bash
 
-nodes=("192.168.0.211" "192.168.0.212" "192.168.0.213" "192.168.0.214" "192.168.0.215" "192.168.0.216")
+nodes=("192.168.0.211" "192.168.0.212" "192.168.0.213" "192.168.0.214" "192.168.0.215" "192.168.0.216" "192.168.0.217" "192.168.0.218")
 node1=${nodes[0]}
 node2=${nodes[1]}
 node3=${nodes[2]}
 node4=${nodes[3]}
 node5=${nodes[4]}
 node6=${nodes[5]}
+node7=${nodes[6]}
+node8=${nodes[7]}
 
 if ! [ -x "$(command -v arkade)" ]; then
     echo ' arkade is not installed.'
@@ -27,7 +29,9 @@ then
         && k3sup join --ip $node3 --server-ip $node1 --user pi \
         && k3sup join --ip $node4 --server-ip $node1 --user pi \
         && k3sup join --ip $node5 --server-ip $node1 --user pi \
-        && k3sup join --ip $node6 --server-ip $node1 --user pi
+        && k3sup join --ip $node6 --server-ip $node1 --user pi \
+        && k3sup join --ip $node7 --server-ip $node1 --user pi \
+        && k3sup join --ip $node8 --server-ip $node1 --user pi
     
 fi
 
