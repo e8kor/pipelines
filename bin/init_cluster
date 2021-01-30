@@ -45,24 +45,3 @@ then
     && crun 'sudo sh -c "echo \"LANG=en_US.UTF-8\" > /etc/locale.con"' \
     && crun 'sudo locale-gen en_US.UTF-8'
 fi
-
-read -p "create mnt folders? [Y/n]" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    crun 'sudo mkdir /mnt/storage' \
-    && crun 'sudo mkdir /mnt/database' 
-fi
-
-read -p "install gluster? [Y/n]" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    crun 'sudo apt-get install -y glusterfs-server' \
-        && crun 'sudo systemctl start glusterd'\
-        && crun 'sudo systemctl enable glusterd'
-
-    for node in ${nodes[@]}; do
-        crun "gluster peer probe $node"
-    done
-fi

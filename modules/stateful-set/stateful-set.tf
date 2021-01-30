@@ -79,11 +79,11 @@ resource "kubernetes_stateful_set" "stateful-set" {
       metadata {
         name = var.name
         annotations = {
-          "volume.beta.kubernetes.io/storage-class"= "volumes"
+          "volume.beta.kubernetes.io/storage-class"= "fs"
         }
       }
       spec {
-        storage_class_name = "volumes"
+        storage_class_name = "fs"
         access_modes = ["ReadWriteOnce"] 
         resources {
           requests = {
