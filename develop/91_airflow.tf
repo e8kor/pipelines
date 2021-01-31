@@ -19,7 +19,8 @@ resource "kubernetes_config_map" "master-airflow-config" {
 }
 
 module "airflow" {
-  depends_on    = [module.database, kubernetes_config_map.master-airflow-config, kubernetes_storage_class.fs]
+  depends_on    = [module.database, kubernetes_config_map.master-airflow-config, helm_release.openebs]
+  # depends_on    = [module.database, kubernetes_config_map.master-airflow-config]
   source        = "../modules/service"
   name          = "airflow"
   image         = "e8kor/pipelines"

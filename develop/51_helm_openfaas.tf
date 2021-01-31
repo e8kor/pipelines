@@ -1,5 +1,4 @@
 resource "helm_release" "openfaas" {
-  depends_on = [kubernetes_namespace.openfaas-fn]
   name       = "openfaas"
   namespace  = "openfaas"
 
@@ -15,6 +14,10 @@ resource "helm_release" "openfaas" {
     name  = "generateBasicAuth"
     value = true
   }
+
+  values = [
+    file("${path.module}/openfaas/values.yaml")
+  ]
 }
 
 resource "helm_release" "openfaas-nats-connector" {

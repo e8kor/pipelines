@@ -78,12 +78,10 @@ resource "kubernetes_stateful_set" "stateful-set" {
     volume_claim_template {
       metadata {
         name = var.name
-        annotations = {
-          "volume.beta.kubernetes.io/storage-class"= "fs"
-        }
+        
       }
       spec {
-        storage_class_name = "fs"
+        storage_class_name = "openebs-jiva-default"
         access_modes = ["ReadWriteOnce"] 
         resources {
           requests = {

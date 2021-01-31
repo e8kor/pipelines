@@ -30,7 +30,7 @@ resource "kubernetes_persistent_volume_claim" "storage" {
     }
   }
   spec {
-    storage_class_name = "volumes"
+    storage_class_name = "openebs-jiva-default"
     access_modes       = ["ReadWriteMany"]
     resources {
       requests = {

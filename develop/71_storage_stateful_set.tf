@@ -1,5 +1,5 @@
 module "storage" {
-  depends_on    = [kubernetes_storage_class.fs]
+  depends_on    = [helm_release.openebs]
   source        = "../modules/stateful-set"
   name          = "storage"
   image         = "minio/minio"
