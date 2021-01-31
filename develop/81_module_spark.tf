@@ -15,7 +15,6 @@ resource "kubernetes_config_map" "master-spark-defaults" {
 
 module "spark-master" {
   depends_on    = [kubernetes_config_map.master-spark-defaults, helm_release.openebs]
-  # depends_on    = [kubernetes_config_map.master-spark-defaults]
   source        = "../modules/service"
   name          = "spark-master"
   image         = "e8kor/apache-spark"
@@ -45,7 +44,6 @@ module "spark-master" {
 
 module "spark-worker" {
   depends_on    = [module.spark-master, helm_release.openebs]
-  # depends_on    = [module.spark-master]
   source        = "../modules/service"
   name          = "spark-worker"
   image         = "e8kor/apache-spark"

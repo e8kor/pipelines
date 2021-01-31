@@ -1,22 +1,13 @@
 resource "helm_release" "openfaas" {
   name       = "openfaas"
   namespace  = "openfaas"
+  create_namespace = true
 
   repository = "https://openfaas.github.io/faas-netes"
   chart      = "openfaas"
 
-  set {
-    name  = "functionNamespace"
-    value = "openfaas-fn"
-  }
-
-  set {
-    name  = "generateBasicAuth"
-    value = true
-  }
-
   values = [
-    file("${path.module}/openfaas/values.yaml")
+    file("${path.module}/faas/values.yaml")
   ]
 }
 
@@ -27,6 +18,7 @@ resource "helm_release" "openfaas-nats-connector" {
   # UPDATE image to this ghcr.io/openfaas/nats-connector
   repository = "https://openfaas.github.io/faas-netes"
   chart      = "nats-connector"
+  create_namespace = true
 }
 
 resource "helm_release" "openfaas-cron-connector" {
@@ -36,4 +28,5 @@ resource "helm_release" "openfaas-cron-connector" {
 
   repository = "https://openfaas.github.io/faas-netes"
   chart      = "cron-connector"
+  create_namespace = true
 }

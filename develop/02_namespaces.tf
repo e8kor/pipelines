@@ -19,13 +19,13 @@ resource "kubernetes_namespace" "openfaas" {
   }
 }
 
-# resource "kubernetes_namespace" "openebs" {
-#   metadata {
-#     labels = {
-#       app      = "openebs"
-#       resource = "namespace"
-#     }
+resource "kubernetes_namespace" "openebs" {
+  metadata {
+    labels = {
+      app      = "openebs"
+      resource = "namespace"
+    }
 
-#     name = "openebs"
-#   }
-# }
+    name = "openebs"
+  }
+}

@@ -1,11 +1,14 @@
 resource "helm_release" "openebs" {
+  depends_on = [ kubernetes_namespace.openebs ]
   name      = "openebs"
-  namespace = "openebs"
-
   repository = "https://openebs.github.io/charts"
   chart      = "openebs"
+  version = "2.5.0"
+
+  namespace = "openebs"
+  create_namespace = true
 
   values = [
-    file("${path.module}/openebs/values.yaml")
+    file("${path.module}/ebs/values.yaml")
   ]
 }
