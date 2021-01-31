@@ -28,6 +28,7 @@ module "airflow" {
   external_tcp  = [8080]
   replicas      = 1
   cpu           = "200m"
+  command       = ["tail", "-f", "/entrypoint.sh"]
   mounts = [
     {
       claim_name     = "airflow-config"

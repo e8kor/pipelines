@@ -8,8 +8,8 @@ resource "kubernetes_config_map" "init-database" {
   }
 
   data = {
-    "01_init-airflow-db.sh" = file("${path.module}/database/01_init-airflow-db.sh")
-    "02_init-airflow-user.sql"   = file("${path.module}/database/02_init-airflow-user.sql")
+    "01_init-airflow-db.sh"    = file("${path.module}/database/01_init-airflow-db.sh")
+    "02_init-airflow-user.sql" = file("${path.module}/database/02_init-airflow-user.sql")
     "03_init-user-db.sql"      = file("${path.module}/database/03_init-user-db.sql")
   }
 
