@@ -6,7 +6,7 @@ resource "kubernetes_secret" "storage-access-key" {
   }
 
   data = {
-    storage_access_key = var.storage-access-key
+    storage-access-key = var.storage-access-key
   }
 }
 
