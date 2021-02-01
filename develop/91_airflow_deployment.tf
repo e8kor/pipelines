@@ -23,8 +23,33 @@ module "airflow" {
     }
   ]
   env = {
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN = "postgresql+psycopg2://${var.database-username}:${random_password.database.result}@database:5432/${var.database-name}"
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN = "postgresql+psycopg2://${var.airflow-db-username}:${random_password.airflow-db.result}@airflow-db:5432/${var.airflow-db-name}"
     AIRFLOW__CORE__FERNET_KEY       = lookup(data.external.fernet-key.result, "data")
     AIRFLOW__CORE__EXECUTOR         = "LocalExecutor"
+  }
+}
+module "airflow-database" {
+  depends_on    = [helm_release.openebs]
+  source        = "../modules/stateful-set"
+  name          = "airflow-db"
+  image         = "postgres"
+  image_version = "latest"
+  internal_tcp  = [5432]
+  external_tcp  = [5432]
+  replicas      = 1
+  storage       = "1Gi"
+  memory        = "256Mi"
+  mounts = [
+    {
+      claim_name     = "airflow"
+      sub_path       = "data"
+      container_path = "/local/lib/postgresql/data"
+    }
+  ]
+  config_volumes = []
+  env = {
+    POSTGRES_PASSWORD = random_password.airflow-db.result
+    POSTGRES_USER     = var.airflow-db-username
+    POSTGRES_DB       = var.airflow-db-name
   }
 }
