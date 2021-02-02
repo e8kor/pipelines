@@ -7,7 +7,7 @@ module "database" {
   internal_tcp  = [5432]
   external_tcp  = [5432]
   replicas      = 1
-  storage       = "1Gi"
+  storage       = "5Gi"
   memory        = "256Mi"
   mounts = [
     {

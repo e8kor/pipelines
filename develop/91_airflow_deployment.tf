@@ -1,5 +1,5 @@
 module "airflow" {
-  depends_on    = [module.database, kubernetes_config_map.master-airflow-config]
+  depends_on    = [module.airflow-database, kubernetes_config_map.master-airflow-config]
   source        = "../modules/service"
   name          = "airflow"
   image         = "e8kor/pipelines"
@@ -28,6 +28,7 @@ module "airflow" {
     AIRFLOW__CORE__EXECUTOR         = "LocalExecutor"
   }
 }
+
 module "airflow-database" {
   depends_on    = [helm_release.openebs]
   source        = "../modules/stateful-set"
@@ -37,11 +38,11 @@ module "airflow-database" {
   internal_tcp  = [5432]
   external_tcp  = [5432]
   replicas      = 1
-  storage       = "1Gi"
+  storage       = "5Gi"
   memory        = "256Mi"
   mounts = [
     {
-      claim_name     = "airflow"
+      claim_name     = "airflow-db"
       sub_path       = "data"
       container_path = "/local/lib/postgresql/data"
     }

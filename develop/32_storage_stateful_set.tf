@@ -7,7 +7,7 @@ module "storage" {
   internal_tcp  = [9000]
   external_tcp  = [9000]
   replicas      = 4
-  storage       = "1Gi"
+  storage       = "10Gi"
   args = [
     "server",
     "http://storage-0.storage.default.svc.cluster.local/data",
