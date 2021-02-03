@@ -1,6 +1,7 @@
 resource "kubernetes_stateful_set" "stateful-set" {
   metadata {
     name = var.name
+    namespace = var.namespace
   }
 
   spec {

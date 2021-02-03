@@ -5,10 +5,9 @@ resource "helm_release" "openebs" {
   chart      = "openebs"
   version    = "2.5.0"
 
-  namespace        = "openebs"
-  create_namespace = true
+  namespace = "openebs"
 
   values = [
-    file("${path.module}/ebs/values.yaml")
+    file("${path.module}/helm_openebs/values.yaml")
   ]
 }

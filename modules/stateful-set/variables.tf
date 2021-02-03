@@ -3,6 +3,12 @@ variable "name" {
   type        = string
 }
 
+variable "namespace" {
+  description = "The name of the service"
+  type        = string
+  default = "default"
+}
+
 variable "image" {
   description = "The docker image name to use within this service"
   type        = string

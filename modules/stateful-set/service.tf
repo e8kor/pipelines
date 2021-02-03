@@ -2,6 +2,7 @@ resource "kubernetes_service" "service" {
   depends_on = [ kubernetes_stateful_set.stateful-set ]
   metadata {
     name = var.name
+    namespace = var.namespace
     labels = {
       app = var.name
       resource = "service"
