@@ -45,7 +45,7 @@ module "airflow" {
     }
   ]
   env = {
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN = "postgresql+psycopg2://${var.airflow-database-username}:${random_password.airflow-database.result}@airflow-database:5432/${var.airflow-database-name}"
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN = "postgresql+psycopg2://${var.airflow-database-username}:${random_password.airflow-database.result}@airflow-database-postgresql:5432/${var.airflow-database-name}"
     AIRFLOW__CORE__FERNET_KEY       = lookup(data.external.fernet-key.result, "data")
     AIRFLOW__CORE__EXECUTOR         = "LocalExecutor"
   }
