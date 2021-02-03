@@ -6,8 +6,8 @@ data "external" "fernet-key" {
 
 resource "kubernetes_config_map" "master-airflow-config" {
   metadata {
-    name = "master-airflow-config"
-    namespace  = "airflow"
+    name      = "master-airflow-config"
+    namespace = "airflow"
     labels = {
       app      = "airflow-config"
       resource = "config"

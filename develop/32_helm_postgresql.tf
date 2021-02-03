@@ -17,7 +17,7 @@ resource "random_password" "database" {
 resource "kubernetes_config_map" "init-database" {
   depends_on = [kubernetes_namespace.database]
   metadata {
-    name = "init-database"
+    name      = "init-database"
     namespace = "database"
     labels = {
       app      = "database"
