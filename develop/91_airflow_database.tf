@@ -28,7 +28,7 @@ resource "helm_release" "airflow-database" {
   }
   set {
     name  = "image.tag"
-    value = "latest"
+    value = "10-alpine"
   }
   set {
     name  = "postgresqlDatabase"
