@@ -43,7 +43,7 @@ resource "helm_release" "airflow-database" {
     value = random_password.airflow-database.result
   }
   set {
-    name  = "storageClass"
+    name  = "storageClassName"
     value = "openebs-jiva-default"
   }
   values = [

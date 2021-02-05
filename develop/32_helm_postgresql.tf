@@ -64,7 +64,7 @@ resource "helm_release" "database" {
     value = "init-database"
   }
   set {
-    name  = "storageClass"
+    name  = "storageClassName"
     value = "openebs-jiva-default"
   }
   values = [

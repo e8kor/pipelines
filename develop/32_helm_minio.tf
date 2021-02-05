@@ -35,7 +35,7 @@ resource "helm_release" "storage" {
     value = random_password.storage.result
   }
   set {
-    name  = "storageClass"
+    name  = "storageClassName"
     value = "openebs-jiva-default"
   }
   values = [
