@@ -2,7 +2,7 @@ module "spark-master" {
   depends_on    = [kubernetes_config_map.master-spark-defaults]
   source        = "../modules/service"
   name          = "spark-master"
-  namespace = "spark"
+  namespace     = "spark"
   image         = "e8kor/apache-spark"
   image_version = "3.0.1"
   internal_tcp  = [7077, 8080]
@@ -32,7 +32,7 @@ module "spark-worker" {
   depends_on    = [module.spark-master]
   source        = "../modules/service"
   name          = "spark-worker"
-    namespace = "spark"
+  namespace     = "spark"
   image         = "e8kor/apache-spark"
   image_version = "3.0.1"
   internal_tcp  = [8081]

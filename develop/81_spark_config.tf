@@ -1,6 +1,6 @@
 resource "kubernetes_config_map" "master-spark-defaults" {
   metadata {
-    name = "master-spark-defaults"
+    name      = "master-spark-defaults"
     namespace = "spark"
     labels = {
       app      = "spark-defaults"
@@ -17,7 +17,7 @@ resource "kubernetes_config_map" "master-spark-defaults" {
 resource "kubernetes_service" "external-spark" {
   depends_on = [module.spark-master]
   metadata {
-    name = "external-spark"
+    name      = "external-spark"
     namespace = "spark"
     labels = {
       app      = "external-spark"
