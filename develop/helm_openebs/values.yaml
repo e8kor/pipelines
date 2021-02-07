@@ -32,7 +32,9 @@ apiserver:
     internalPort: 5656
   sparse:
     enabled: "false"
-  nodeSelector: {}
+  nodeSelector: {
+    node-role.kubernetes.io/fs: ""
+  }
   tolerations: []
   affinity: {}
   healthCheck:
@@ -65,7 +67,7 @@ provisioner:
   enableLeaderElection: true
   patchJivaNodeAffinity: enabled
   nodeSelector: {
-    "node-role.kubernetes.io/fs-provisioner" : ""
+    node-role.kubernetes.io/fs: ""
   }
   tolerations: []
   affinity: {}
@@ -89,7 +91,7 @@ localprovisioner:
   replicas: 1
   enableLeaderElection: true
   basePath: "/var/openebs/local"
-  nodeSelector: {}
+  nodeSelector: { }
   tolerations: []
   affinity: {}
   healthCheck:
@@ -134,7 +136,9 @@ snapshotOperator:
   replicas: 1
   enableLeaderElection: true
   upgradeStrategy: "Recreate"
-  nodeSelector: {}
+  nodeSelector: {
+    node-role.kubernetes.io/fs: ""
+  }
   tolerations: []
   affinity: {}
   healthCheck:
@@ -159,7 +163,7 @@ ndm:
   probes:
     enableSeachest: false
   nodeSelector: {
-    "node-role.kubernetes.io/fs": ""
+    node-role.kubernetes.io/fs: ""
   }
   tolerations: []
   healthCheck:
@@ -181,9 +185,7 @@ ndmOperator:
   imageTag: "1.1.0"
   replicas: 1
   upgradeStrategy: Recreate
-  nodeSelector: {
-    "node-role.kubernetes.io/fs": ""
-  }
+  nodeSelector: { }
   tolerations: []
   healthCheck:
     initialDelaySeconds: 30
@@ -211,7 +213,9 @@ webhook:
   healthCheck:
     initialDelaySeconds: 30
     periodSeconds: 60
-  nodeSelector: {}
+  nodeSelector: {
+    node-role.kubernetes.io/fs-provisioner: ""
+  }
   tolerations: []
   affinity: {}
   hostNetwork: false

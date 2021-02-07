@@ -1,9 +1,9 @@
 resource "kubernetes_deployment" "deployment" {
   metadata {
-    name = var.name
+    name      = var.name
     namespace = var.namespace
     labels = {
-      app = var.name
+      app      = var.name
       resource = "deployment"
     }
   }
@@ -17,29 +17,29 @@ resource "kubernetes_deployment" "deployment" {
     template {
       metadata {
         labels = {
-          app = var.name
+          app      = var.name
           resource = "deployment"
         }
       }
       spec {
         container {
-          name  = var.name
-          image = "${var.image}:${var.image_version}"
+          name              = var.name
+          image             = "${var.image}:${var.image_version}"
           image_pull_policy = "Always"
-          args = var.args
-          command = var.command
+          args              = var.args
+          command           = var.command
           dynamic "port" {
             for_each = var.internal_tcp
             content {
               container_port = port.value
-              protocol     = "TCP"
-              name         = "tcp-int-${port.key}"
+              protocol       = "TCP"
+              name           = "tcp-int-${port.key}"
             }
           }
           dynamic "volume_mount" {
             for_each = var.mounts
             content {
-              name     = volume_mount.value.claim_name
+              name       = volume_mount.value.claim_name
               sub_path   = volume_mount.value.sub_path
               mount_path = volume_mount.value.container_path
             }
@@ -54,14 +54,14 @@ resource "kubernetes_deployment" "deployment" {
           resources {
             requests = {
               memory = var.memory
-              cpu = var.cpu
+              cpu    = var.cpu
             }
           }
         }
         dynamic "volume" {
           for_each = var.config_volumes
           content {
-            name     = volume.value.claim_name
+            name = volume.value.claim_name
             config_map {
               name = volume.value.config_map_name
             }

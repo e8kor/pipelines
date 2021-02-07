@@ -32,7 +32,7 @@ resource "kubernetes_config_map" "init-database" {
 }
 
 resource "helm_release" "database" {
-  depends_on = [kubernetes_namespace.database]
+  depends_on = [kubernetes_namespace.database, kubernetes_storage_class.cstor]
   name       = "database"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
@@ -64,8 +64,12 @@ resource "helm_release" "database" {
     value = "init-database"
   }
   set {
-    name  = "storageClassName"
-    value = "openebs-jiva-default"
+    name  = "persistence.storageClass"
+    value = "openebs-sc-statefulset"
+  }
+  set {
+    name  = "persistence.size"
+    value = "30Gi"
   }
   values = [
     file("${path.module}/helm_postgresql/values.yaml")

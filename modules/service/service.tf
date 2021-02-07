@@ -1,6 +1,6 @@
 locals {
   entrypoints = var.public ? "https-public" : "https-local"
-  publicity = var.public ? "public" : "local"
+  publicity   = var.public ? "public" : "local"
 }
 
 resource "kubernetes_service" "service" {
@@ -9,7 +9,7 @@ resource "kubernetes_service" "service" {
     name      = "${var.name}-tcp-${count.index}"
     namespace = "default"
     labels = {
-      app = var.name
+      app      = var.name
       resource = "service"
     }
   }
@@ -18,13 +18,13 @@ resource "kubernetes_service" "service" {
     selector = {
       app = var.name
     }
-    
+
     port {
-      port    = var.external_tcp[count.index]
+      port        = var.external_tcp[count.index]
       target_port = var.external_tcp[count.index]
     }
   }
-} 
+}
 
 output "internal_ip" {
   value = length(kubernetes_service.service) > 0 ? kubernetes_service.service[0].spec[0].cluster_ip : null

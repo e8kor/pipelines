@@ -29,6 +29,18 @@ resource "kubernetes_namespace" "airflow" {
     name = "airflow"
   }
 }
+
+resource "kubernetes_namespace" "spark" {
+  metadata {
+    labels = {
+      app      = "spark"
+      resource = "namespace"
+    }
+
+    name = "spark"
+  }
+}
+
 resource "kubernetes_namespace" "storage" {
   metadata {
     labels = {

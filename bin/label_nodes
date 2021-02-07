@@ -44,7 +44,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     kubectl label node --overwrite node8 node-role.kubernetes.io/spark= \
     && kubectl label node --overwrite node7 node-role.kubernetes.io/spark= \
-    && kubectl label node --overwrite node6 node-role.kubernetes.io/spark=
+    && kubectl label node --overwrite node6 node-role.kubernetes.io/spark= 
+    
 fi
 
 read -p "label fs nodes? [Y/n]" -n 1 -r
@@ -60,5 +61,8 @@ read -p "label fs-provisioner nodes? [Y/n]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    kubectl label node --overwrite node3 node-role.kubernetes.io/fs-provisioner= 
+    kubectl label node --overwrite node3 node-role.kubernetes.io/fs-provisioner= \
+    # && kubectl label node --overwrite node3 node=openebs \
+    # && kubectl label node --overwrite node6 node=openebs \
+    # && kubectl label node --overwrite node7 node=openebs
 fi

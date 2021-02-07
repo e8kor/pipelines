@@ -6,7 +6,7 @@ variable "name" {
 variable "namespace" {
   description = "The name of the service"
   type        = string
-  default = "default"
+  default     = "default"
 }
 
 variable "image" {
@@ -83,6 +83,6 @@ variable "config_volumes" {
 }
 
 variable "node_selector" {
-  type = map(any)
+  type    = map(any)
   default = {}
 }

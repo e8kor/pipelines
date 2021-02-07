@@ -35,8 +35,12 @@ resource "helm_release" "storage" {
     value = random_password.storage.result
   }
   set {
-    name  = "storageClassName"
-    value = "openebs-jiva-default"
+    name  = "persistence.storageClass"
+    value = "openebs-sc-statefulset"
+  }
+  set {
+    name  = "persistence.size"
+    value = "30Gi"
   }
   values = [
     file("${path.module}/helm_minio/values.yaml")

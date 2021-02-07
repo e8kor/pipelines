@@ -6,7 +6,7 @@ variable "name" {
 variable "namespace" {
   description = "The name of the service"
   type        = string
-  default = "default"
+  default     = "default"
 }
 
 variable "image" {

@@ -1,3 +1,8 @@
+provider "kubernetes-alpha" {
+  server_side_planning = true
+  config_path = "~/.kube/config"
+}
+
 provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = "default"
@@ -20,6 +25,10 @@ terraform {
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "2.0.1"
+    }
+    kubernetes-alpha = {
+      source  = "hashicorp/kubernetes-alpha"
+      version = "0.2.1"
     }
   }
   backend "kubernetes" {

@@ -2,7 +2,7 @@ resource "kubernetes_persistent_volume" "storage" {
   metadata {
     name = var.name
     labels = {
-      app = var.name
+      app      = var.name
       resource = "volume"
     }
   }
@@ -10,8 +10,8 @@ resource "kubernetes_persistent_volume" "storage" {
     capacity = {
       storage = var.storage
     }
-    storage_class_name = "volumes"
-    access_modes = ["ReadWriteMany"]
+    storage_class_name               = "volumes"
+    access_modes                     = ["ReadWriteMany"]
     persistent_volume_reclaim_policy = "Retain"
     persistent_volume_source {
       host_path {
@@ -25,7 +25,7 @@ resource "kubernetes_persistent_volume_claim" "storage" {
   metadata {
     name = var.name
     labels = {
-      app = var.name
+      app      = var.name
       resource = "volume-claim"
     }
   }

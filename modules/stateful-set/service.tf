@@ -1,14 +1,14 @@
 resource "kubernetes_service" "service" {
-  depends_on = [ kubernetes_stateful_set.stateful-set ]
+  depends_on = [kubernetes_stateful_set.stateful-set]
   metadata {
-    name = var.name
+    name      = var.name
     namespace = var.namespace
     labels = {
-      app = var.name
+      app      = var.name
       resource = "service"
     }
   }
-  
+
   spec {
     cluster_ip = "None"
     dynamic "port" {
@@ -24,22 +24,22 @@ resource "kubernetes_service" "service" {
   }
 }
 resource "kubernetes_service" "service-access" {
-  depends_on = [ kubernetes_stateful_set.stateful-set ]
+  depends_on = [kubernetes_stateful_set.stateful-set]
   metadata {
     name = "${var.name}-service"
     labels = {
-      app = var.name
+      app      = var.name
       resource = "service-access"
     }
   }
-  
+
   spec {
     type = "ClusterIP"
     dynamic "port" {
       for_each = var.internal_tcp
       content {
-        port = port.value
-        name = "tcp-int-${port.key}"
+        port     = port.value
+        name     = "tcp-int-${port.key}"
         protocol = "TCP"
       }
     }
