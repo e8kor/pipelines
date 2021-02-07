@@ -1,5 +1,5 @@
 resource "kubernetes_storage_class" "cstor" {
-  depends_on = [null_resource.cstor-pool-claim]
+  depends_on          = [null_resource.cstor-pool-claim]
   storage_provisioner = "openebs.io/provisioner-iscsi"
 
   metadata {
@@ -11,7 +11,7 @@ resource "kubernetes_storage_class" "cstor" {
       - name: ReplicaCount
         value: "1"
       EOT
-      "openebs.io/cas-type" = "cstor"
+      "openebs.io/cas-type"   = "cstor"
     }
   }
 }

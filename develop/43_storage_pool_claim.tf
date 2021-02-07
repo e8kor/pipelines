@@ -4,7 +4,7 @@ resource "null_resource" "cstor-pool-claim" {
   }
 
   provisioner "local-exec" {
-    when = "destroy"
+    when    = "destroy"
     command = "kubectl delete -f - <<EOF\n${var.storage-pool-claim}\nEOF"
   }
 }
