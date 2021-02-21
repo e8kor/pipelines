@@ -30,7 +30,7 @@ resource "kubernetes_namespace" "storage" {
 }
 
 resource "helm_release" "storage" {
-  depends_on = [kubernetes_storage_class.cstor, helm_release.openebs]
+  depends_on = [helm_release.openebs]
   name       = "storage"
   repository = "https://helm.min.io/"
   chart      = "minio"
@@ -53,7 +53,48 @@ resource "helm_release" "storage" {
     name  = "persistence.size"
     value = "30Gi"
   }
+  set {
+    name  = "serviceAccount.name"
+    value = "storage"
+  }
+  set {
+    name  = "mcImage.tag"
+    value = "RELEASE.2020-11-25T22-36-25Z"
+  }
+  set {
+    name  = "replicas"
+    value = 2
+  }
+  set {
+    name  = "image.tag"
+    value = "RELEASE.2020-11-25T22-36-25Z"
+  }
   values = [
     file("${path.module}/helm_minio/values.yaml")
   ]
+}
+
+
+resource "kubernetes_service" "external-storage" {
+  depends_on = [helm_release.openebs]
+  metadata {
+    name = "external-storage"
+    namespace = "storage"
+    labels = {
+      app      = "external-storage"
+      resource = "service"
+    }
+  }
+
+  spec {
+    type = "NodePort"
+    port {
+      port        = 9000
+      target_port = 9000
+      node_port   = 32000
+    }
+    selector = {
+      app = "minio"
+    }
+  }
 }

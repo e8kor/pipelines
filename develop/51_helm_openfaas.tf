@@ -1,6 +1,6 @@
 resource "helm_release" "openfaas" {
-  name      = "openfaas"
-  namespace = "openfaas"
+  name             = "openfaas"
+  namespace        = "openfaas"
   repository       = "https://openfaas.github.io/faas-netes"
   chart            = "openfaas"
   version          = "7.0.4"

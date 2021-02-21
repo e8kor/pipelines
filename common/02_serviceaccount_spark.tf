@@ -1,6 +1,6 @@
 resource "kubernetes_service_account" "spark" {
   metadata {
-    name = "spark"
+    name      = "spark"
     namespace = "spark"
     labels = {
       app      = "spark"

@@ -14,7 +14,7 @@ clusterDomain: cluster.local
 ##
 image:
   repository: minio/minio
-  tag: RELEASE.2020-11-25T22-36-25Z
+  tag: RELEASE.2021-02-14T04-01-33Z
   pullPolicy: IfNotPresent
 
 ## Set default image, imageTag, and imagePullPolicy for the `mc` (the minio
@@ -22,7 +22,7 @@ image:
 ##
 mcImage:
   repository: minio/mc
-  tag: RELEASE.2020-11-25T22-36-25Z
+  tag: RELEASE.2021-02-14T04-28-06Z
   pullPolicy: IfNotPresent
 
 ## Set default image, imageTag, and imagePullPolicy for the `jq` (the JSON
@@ -136,10 +136,10 @@ persistence:
   ##
   ## Storage class of PV to bind. By default it looks for standard storage class.
   ## If the PV uses a different storage class, specify that here.
-  # storageClass: "-"
+  storageClass: ""
   VolumeName: ""
   accessMode: ReadWriteOnce
-  size: 30Gi
+  size: 500Gi
 
   ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
   ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
@@ -239,7 +239,11 @@ defaultBucket:
 ## Create multiple buckets after minio install
 ## Enabling `defaultBucket` will take priority over this list
 ##
-buckets: []
+buckets: 
+  - name: otodom
+    policy: none
+    purge: false
+
   # - name: bucket1
   #   policy: none
   #   purge: false
@@ -331,7 +335,7 @@ serviceAccount:
   create: true
   ## The name of the service account to use. If 'create' is 'true', a service account with that name
   ## will be created. Otherwise, a name will be auto-generated.
-  name: "storage"
+  name:
 
 metrics:
   # Metrics can not be disabled yet: https://github.com/minio/minio/issues/7493
