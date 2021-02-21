@@ -78,7 +78,7 @@ resource "helm_release" "storage" {
 resource "kubernetes_service" "external-storage" {
   depends_on = [helm_release.openebs]
   metadata {
-    name = "external-storage"
+    name      = "external-storage"
     namespace = "storage"
     labels = {
       app      = "external-storage"
