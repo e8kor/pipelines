@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh pi@$1 "sudo mkfs.ext4 /dev/sda; sudo mkfs.ext4 /dev/sdb "

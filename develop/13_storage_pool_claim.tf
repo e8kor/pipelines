@@ -1,3 +1,5 @@
+locals {
+  storage_pool_claim  = <<EOF
 apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
@@ -23,3 +25,22 @@ spec:
       - blockdevice-6b06cab63269f72f791eaf3e00db45ad
       - blockdevice-cbd63357634af1aa2c2cd05f86d5e8a9
       - blockdevice-03a8e056ca2f4fefff8cff8afafaf442
+    EOF
+}
+
+resource "null_resource" "cstor-pool-claim" {
+  provisioner "local-exec" {
+    when    = create
+    command = "kubectl apply -f - <<EOF\n${local.storage_pool_claim}\nEOF"
+
+  }
+
+  # provisioner "local-exec" {
+  #   when    = destroy
+  #   command = "kubectl delete -f - <<EOF\n$TEMPLATE\nEOF"
+
+  #   environment = {
+  #     TEMPLATE = local.storage_pool_claim
+  #   }
+  # }
+}

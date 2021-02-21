@@ -32,7 +32,7 @@ resource "kubernetes_config_map" "init-database" {
 }
 
 resource "helm_release" "database" {
-  depends_on = [kubernetes_namespace.database, kubernetes_storage_class.cstor]
+  depends_on = [kubernetes_namespace.database, kubernetes_storage_class.cstor, helm_release.openebs]
   name       = "database"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
@@ -65,7 +65,7 @@ resource "helm_release" "database" {
   }
   set {
     name  = "persistence.storageClass"
-    value = "openebs-sc-statefulset"
+    value = "openebs-jiva-default"
   }
   set {
     name  = "persistence.size"

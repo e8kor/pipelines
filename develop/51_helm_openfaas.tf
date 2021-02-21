@@ -5,6 +5,7 @@ resource "helm_release" "openfaas" {
   repository = "https://openfaas.github.io/faas-netes"
   chart      = "openfaas"
   version    = "7.0.4"
+  create_namespace = true
 
   values = [
     file("${path.module}/helm_openfaas/values-arm64.yaml")

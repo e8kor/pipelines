@@ -19,7 +19,7 @@ output "storage-secret-key" {
 }
 
 resource "helm_release" "storage" {
-  depends_on = [kubernetes_namespace.storage]
+  depends_on = [kubernetes_storage_class.cstor, helm_release.openebs]
   name       = "storage"
   repository = "https://helm.min.io/"
   chart      = "minio"
@@ -36,7 +36,7 @@ resource "helm_release" "storage" {
   }
   set {
     name  = "persistence.storageClass"
-    value = "openebs-sc-statefulset"
+    value = "openebs-jiva-default"
   }
   set {
     name  = "persistence.size"

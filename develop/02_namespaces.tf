@@ -8,16 +8,6 @@ resource "kubernetes_namespace" "openfaas-fn" {
     name = "openfaas-fn"
   }
 }
-resource "kubernetes_namespace" "openfaas" {
-  metadata {
-    labels = {
-      app      = "openfaas"
-      resource = "namespace"
-    }
-
-    name = "openfaas"
-  }
-}
 
 resource "kubernetes_namespace" "airflow" {
   metadata {
@@ -60,16 +50,5 @@ resource "kubernetes_namespace" "database" {
     }
 
     name = "database"
-  }
-}
-
-resource "kubernetes_namespace" "openebs" {
-  metadata {
-    labels = {
-      app      = "openebs"
-      resource = "namespace"
-    }
-
-    name = "openebs"
   }
 }
