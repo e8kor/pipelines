@@ -1,5 +1,5 @@
 locals {
-  storage_pool_claim  = <<EOF
+  storage_pool_claim = <<EOF
 apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:

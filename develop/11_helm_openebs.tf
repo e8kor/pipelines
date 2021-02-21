@@ -5,7 +5,7 @@ resource "helm_release" "openebs" {
   chart      = "openebs"
   version    = "2.5.0"
 
-  namespace = "openebs"
+  namespace        = "openebs"
   create_namespace = true
 
   values = [
