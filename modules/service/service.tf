@@ -7,7 +7,7 @@ resource "kubernetes_service" "service" {
   count = length(var.external_tcp)
   metadata {
     name      = "${var.name}-tcp-${count.index}"
-    namespace = "default"
+    namespace = var.namespace
     labels = {
       app      = var.name
       resource = "service"

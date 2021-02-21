@@ -1,3 +1,14 @@
+resource "kubernetes_namespace" "openfaas-fn" {
+  metadata {
+    labels = {
+      app      = "openfaas-fn"
+      resource = "namespace"
+    }
+
+    name = "openfaas-fn"
+  }
+}
+
 resource "kubernetes_secret" "storage-access-key" {
   depends_on = [kubernetes_namespace.openfaas-fn]
   metadata {

@@ -14,6 +14,16 @@ resource "random_password" "database" {
   override_special = "_%@"
 }
 
+resource "kubernetes_namespace" "database" {
+  metadata {
+    labels = {
+      app      = "database"
+      resource = "namespace"
+    }
+    name = "database"
+  }
+}
+
 resource "kubernetes_config_map" "init-database" {
   depends_on = [kubernetes_namespace.database]
   metadata {
@@ -24,21 +34,18 @@ resource "kubernetes_config_map" "init-database" {
       resource = "config"
     }
   }
-
   data = {
     "01_init-user-db.sql" = file("${path.module}/database/01_init-user-db.sql")
   }
-
 }
 
 resource "helm_release" "database" {
-  depends_on = [kubernetes_namespace.database, kubernetes_storage_class.cstor, helm_release.openebs]
+  depends_on = [kubernetes_namespace.database, kubernetes_config_map.init-database, helm_release.openebs]
   name       = "database"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
   version    = "10.2.6"
   namespace  = "database"
-
   set {
     name  = "image.repository"
     value = "postgres"
@@ -66,6 +73,18 @@ resource "helm_release" "database" {
   set {
     name  = "persistence.storageClass"
     value = "openebs-jiva-default"
+  }
+  set {
+    name  = "postgresqlDataDir"
+    value = "/var/lib/postgresql/data"
+  }
+  set {
+    name  = "securityContext.runAsUser"
+    value = 70
+  }
+  set {
+    name  = "containerSecurityContext.runAsUser"
+    value = 70
   }
   set {
     name  = "persistence.size"

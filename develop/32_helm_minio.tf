@@ -18,6 +18,17 @@ output "storage-secret-key" {
   sensitive = true
 }
 
+resource "kubernetes_namespace" "storage" {
+  metadata {
+    labels = {
+      app      = "storage"
+      resource = "namespace"
+    }
+
+    name = "storage"
+  }
+}
+
 resource "helm_release" "storage" {
   depends_on = [kubernetes_storage_class.cstor, helm_release.openebs]
   name       = "storage"

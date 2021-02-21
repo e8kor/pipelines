@@ -2,6 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: openebs-sc-statefulset
+  namespace: openebs
   annotations:
     openebs.io/cas-type: cstor
     cas.openebs.io/config: |
