@@ -18,9 +18,26 @@ resource "kubernetes_config_map" "master-spark-defaults" {
     }
   }
   data = {
-    "spark-defaults.conf" = file("${path.module}/spark/master-spark-defaults.conf")
+    "spark-defaults.conf" = <<EOT
+        spark.jars.packages org.apache.hadoop:hadoop-aws:3.2.0,org.apache.hadoop:hadoop-common:3.2.0,com.amazonaws:aws-java-sdk-bundle:1.11.874
+        spark.kubernetes.authenticate.driver.serviceAccountName spark
+        spark.kubernetes.namespace spark
+        spark.master spark://0.0.0.0:7077
+        spark.driver.extraLibraryPath /opt/hadoop/lib/native
+        spark.app.id KubernetesSpark
+        spark.hadoop.fs.s3a.endpoint http://external-storage.storage:9000
+        spark.hadoop.fs.s3a.access.key ${var.storage-access-key}
+        spark.hadoop.fs.s3a.secret.key ${random_password.storage.result}
+        spark.hadoop.fs.s3a.path.style.access true
+        spark.hadoop.fs.s3a.impl org.apache.hadoop.fs.s3a.S3AFileSystem
+      EOT
   }
 }
+
+      # fs.s3a.access.key minio
+      # fs.s3a.secret.key e7oJO2QrLCHhd9jW
+      # fs.s3a.endpoint http://external-storage.storage:9000
+      # file("${path.module}/spark/master-spark-defaults.conf")
 
 resource "kubernetes_service" "external-spark" {
   depends_on = [module.spark-master, kubernetes_namespace.spark]
