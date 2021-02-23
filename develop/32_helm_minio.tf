@@ -50,6 +50,10 @@ resource "helm_release" "storage" {
     value = "openebs-jiva-default"
   }
   set {
+    name  = "resources.requests.memory"
+    value = "2Gi"
+  }
+  set {
     name  = "persistence.size"
     value = "30Gi"
   }
