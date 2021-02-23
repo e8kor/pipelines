@@ -239,10 +239,10 @@ defaultBucket:
 ## Create multiple buckets after minio install
 ## Enabling `defaultBucket` will take priority over this list
 ##
-buckets: 
-  - name: otodom
-    policy: none
-    purge: false
+buckets: []
+  # - name: otodom
+  #   policy: none
+  #   purge: false
 
   # - name: bucket1
   #   policy: none
