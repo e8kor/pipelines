@@ -34,10 +34,10 @@ resource "kubernetes_config_map" "master-spark-defaults" {
   }
 }
 
-      # fs.s3a.access.key minio
-      # fs.s3a.secret.key e7oJO2QrLCHhd9jW
-      # fs.s3a.endpoint http://external-storage.storage:9000
-      # file("${path.module}/spark/master-spark-defaults.conf")
+# fs.s3a.access.key minio
+# fs.s3a.secret.key e7oJO2QrLCHhd9jW
+# fs.s3a.endpoint http://external-storage.storage:9000
+# file("${path.module}/spark/master-spark-defaults.conf")
 
 resource "kubernetes_service" "external-spark" {
   depends_on = [module.spark-master, kubernetes_namespace.spark]
